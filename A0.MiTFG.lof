@@ -1,0 +1,23 @@
+\babel@toc {spanish}{}
+\addvspace {10\p@ }
+\contentsline {xchapter}{Introducción y visión general}{1}{chapter.1}%
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Principales causas de muerte en 2016\relax }}{2}{figure.caption.6}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Elementos fundamentales ECG\relax }}{4}{figure.caption.7}%
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Ilustración derivaciones ECG\relax }}{5}{figure.caption.8}%
+\contentsline {figure}{\numberline {1.4}{\ignorespaces Representación intervalo R-R\relax }}{5}{figure.caption.9}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Especificaciones}{9}{chapter.2}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Diagrama de contexto\relax }}{10}{figure.caption.10}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Diagrama de casos de uso\relax }}{11}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Diagrama de bloques\relax }}{12}{figure.caption.12}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Implementación}{17}{chapter.3}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagrama de bloques general\relax }}{19}{figure.caption.13}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Función de Matlab para extraer los datos del repositorio y formatearlos como texto\relax }}{21}{figure.caption.14}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Diagrama de lectura de ficheros simplificado\relax }}{21}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Diagrama de lectura de ficheros en QT\relax }}{22}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Selector de frecuencias y lectura del fichero\relax }}{23}{figure.caption.17}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Proceso construcción de trama\relax }}{24}{figure.caption.18}%
+\addvspace {10\p@ }
+\contentsline {xchapter}{Manual de uso}{29}{appendix.Alph1}%
+\contentsfinish 
