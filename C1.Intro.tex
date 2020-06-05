@@ -35,12 +35,12 @@ Como puede verse en la figura~\ref{fig:Muertes2016}, según la organización mun
     \end{minipage}
             \begin{minipage}[b]{.5\linewidth}
         \centering
-        \subcaptionbox{Fallecimientos en paises con ingresos bajos-medios\label{subfig:Muertes2016Medio}}
+        \subcaptionbox{Fallecimientos en países con ingresos bajos-medios\label{subfig:Muertes2016Medio}}
             {\includegraphics[width = .8\linewidth]{ figuras/Muertes2016MedioAlto.png}} 
     \end{minipage}
     \begin{minipage}[b]{.5\linewidth}
         \centering
-        \subcaptionbox{Fallecimientos en paises con ingresos altos\label{subfig:Muertes2016Alto}}
+        \subcaptionbox{Fallecimientos en países con ingresos altos\label{subfig:Muertes2016Alto}}
             {\includegraphics[width = .8\linewidth]{ figuras/Muertes2016Alto.png}}
         \end{minipage}
     \caption{Principales causas de muerte en 2016}
@@ -55,7 +55,7 @@ Desde sus inicios hasta hoy, el paradigma del registro de ECG portátil ha cambi
 
 Teóricamente los monitores de eventos cardíacos son menos eficientes a la hora de la diagnosis de enfermedades que los Holters debido a que pierden los datos referentes a eventos que sean asintomáticos o que el paciente no percibe. Sin embargo encuentran su espacio en el mercado ya que típicamente son más pequeños y cómodos de usar que los Holters.
 
-No obstante esto podría cambiar gracias al desarrollo de un nuevo tipo de monitores de eventos cardíacos, los supervisores de eventos cardíacos autodisparados. La teoría detrás de estos dispositivos es sencilla, si se puede analizar en tiempo real la señal ECG adquirida, entonces se puede detectar, en tiempo real y sin la intervención del paciente, el evento cardiaco anómalo. Y solo tras la detección, almacenar, e incluso trasmitir, el fragmento del ECG del paciente en el que se ha detectado el evento. Evitando así el enorme gasto de batería que conlleva la transmisión constante del registro y gozando de todas la ventajas de los supervisores cardíacos sin su mayor contra. La práctica, por otro lado, no es tán sencilla como se expondrá después.
+No obstante esto podría cambiar gracias al desarrollo de un nuevo tipo de monitores de eventos cardíacos, los supervisores de eventos cardíacos autodisparados. La teoría detrás de estos dispositivos es sencilla, si se puede analizar en tiempo real la señal ECG adquirida, entonces se puede detectar, en tiempo real y sin la intervención del paciente, el evento cardiaco anómalo. Y solo tras la detección, almacenar, e incluso trasmitir, el fragmento del ECG del paciente en el que se ha detectado el evento. Evitando así el enorme gasto de batería que conlleva la transmisión constante del registro y gozando de todas la ventajas de los supervisores cardíacos sin su mayor contra. La práctica, por otro lado, no es tan sencilla como se expondrá después.
 
 La base del funcionamiento de un supervisor de eventos cardíaco autodisparados es la detección automática de los latidos presentes en la señal ECG.(TODO: Satija Reference) Localizados estos latidos, el supervisor debe extraer diversas características de ellos que permitan clasificarlos como anormales. La ocurrencia de estas anormalidades constituyen los eventos susceptibles de ser guardados o transmitidos.  Antes de continuar hablando de este tipo de monitores cardíacos es necesario comprender moderadamente los diferentes elementos de una señal ECG y qué datos médicos de interés se pueden obtener de ellos. 
 
@@ -73,7 +73,7 @@ Como se puede ver en la figura~\ref{fig:ECGelements}, en la señal ECG correspon
 
 En función de las posiciones donde se coloquen los electrodos a la hora de tomar las muestras, las señales se registrarán con una forma u otra. Estas posiciones se conocen como una derivaciones. En el ECG clásico estas derivaciones están estandarizadas en lo que se conoce como Sistema de doce derivaciones: un conjunto de seis derivaciones tomadas en las extremidades y otras seis, denominadas precordiales, que se sitúan en distintos puntos del torax. Las de las extremidades registran los potenciales que se transmiten al plano frontal y las precordiales recogen los potenciales del plano horizontal como puede verse en la figura \ref{fig:ECGelements}. \cite{Harrison}
 
-Podría decirse que cada derivación hace las veces de un observador en un punto diferente, por lo que la señal resultante, que procede de diferencias potenciales con dirección y sentido, variará de polarización en según qué derivación, como puede “variar” el sentido de rotación de disco en función de si es observado desde arriba o desde abajo. LA FIGURA 1.2 EN CONCETO CORRESPONDE A UN ECG DE UN SUJETO SANO TOMADO EN LA DERIVACIÓN II.
+Podría decirse que cada derivación hace las veces de un observador en un punto diferente, por lo que la señal resultante, que procede de diferencias potenciales con dirección y sentido, variará de polarización en según qué derivación, como puede “variar” el sentido de rotación de disco en función de si es observado desde arriba o desde abajo. LA FIGURA 1.2 EN CONCRETO CORRESPONDE A UN ECG DE UN SUJETO SANO TOMADO EN LA DERIVACIÓN II.
 
 \begin{figure}[ht]
 	\centering
@@ -88,7 +88,7 @@ En muchas ocasiones la detección de estas patologías requiere como paso previo
 
 \subsection{Detectores de QRS: cálculo de la tasa cardíaca basada en ECG}
 
-Una vez reconocidos los latidos cardíacos se puede medir la diferencia de tiempo entre dos latidos, esto se conoce como intervalo RR (Ver figura~\ref{fig:RRInterval})  de donde se obtiene la frecuencia cardíaca instantánea, parámetro típico que es empleado para activar numerosos supervisores de eventos cardíacos autodisparados. Este proyecto se centra en este parámetro y en los algoritmos de detección  
+Una vez reconocidos los latidos cardíacos se puede medir la diferencia de tiempo entre dos latidos, esto se conoce como intervalo RR (Ver figura~\ref{fig:RRInterval})  de donde se obtiene la frecuencia cardíaca instantánea, parámetro típico que es empleado para activar numerosos supervisores de eventos cardíacos autodisparados. Este proyecto se centra en este parámetro y, en particular, en los algoritmos de detección de latidos que posibilitan su obtención.  
 
 \begin{figure}[ht]
 	\centering
@@ -98,15 +98,15 @@ Una vez reconocidos los latidos cardíacos se puede medir la diferencia de tiemp
 \end{figure} 
 
 \clearpage
-En la literatura actual existen numerosos algoritmos muy testeados y eficaces a la hora de detectar el complejo QRS y ,en base a esa detección, calcular la tasa cardíaca. Tradicionalmente se ha desarrollado para ser ejecutados sobre unos datos extraídos previamente y almacenados en memoria. Pero esto no sirve para ser aplicados en tiempo real por diseño, así que en los últimos años se ha estado invirtiendo mucho esfuerzo en desarrollar algoritmos de tiempo real. Siendo el más conocido y uno de los más antiguos el de “Pan Tompkins” basado en el análisis de la pendiente, la intensidad y la duración de los complejos QRS.\cite{PanTompkins} A pesar de ello, a día de hoy se pueden encontrar numerosos estudios sobre nuevas metodologías para llevar a cabo esta tarea como algoritmos especializados en muestras con mucho ruido\cite{RsSlope} o métodos con diferentes aproximaciones como máquinas de estado finitas\cite{FSM} o empleando coeficientes de wavelet.\cite{Wavelet}
+En la literatura actual existen numerosos algoritmos muy testeados y eficaces a la hora de detectar el complejo QRS y ,en base a esa detección, calcular la tasa cardíaca. Tradicionalmente se ha desarrollado para ser ejecutados sobre unos datos extraídos previamente y almacenados en memoria. Pero esto no sirve para ser aplicados en tiempo real por diseño, así que en los últimos años se ha estado invirtiendo mucho esfuerzo en desarrollar algoritmos de tiempo real. Siendo el más conocido y uno de los más antiguos el de “Pan Tompkins” basado en el análisis de la pendiente, la intensidad y la duración de los complejos QRS.\cite{PanTompkins} A día de hoy se pueden encontrar numerosos estudios sobre nuevas metodologías para llevar a cabo esta tarea como algoritmos especializados en muestras con mucho ruido\cite{RsSlope} o métodos con diferentes aproximaciones como máquinas de estado finitas\cite{FSM} o empleando coeficientes de wavelet.\cite{Wavelet}
 
 Sin embargo no resulta sencillo encontrar la forma de testar dichos métodos en entornos reales. Para realizar las pruebas pertinentes se hace uso de bases de datos estandarizadas como la MIT-BIH (TODO: Poner esto good con referencia y toh.), evaluando principalmente la tasa de falsos positivos y negativos. (TODO: Referencia Pootja 2017) Un ejemplo de algoritmo para determinar la fiabilidad de un algoritmo se puede encontrar en la norma para marcado CE de los Holter de ECG (TODO: referencia- AENOR, te la mando por correo)
 
+Por otro lado, la tendencia actual es emplear dispositivos cada vez de menor consumo que suelen ir acompañados de menores recursos y baterías más pequeñas. Por ello cada vez se requieren métodos de detección con menor complejidad computacional pero con una robustez suficiente para ser caracterizados como fiables. Minimizando así las transmisiones de datos a lo estrictamente necesario, ahorrando batería para poder tomar medidas durante un periodo más largo. En este contexto resulta complejo evaluar cuando un algoritmo es suficientemente válido o no debido únicamente a su fiabilidad de detección, influyen también parámetros como el consumo de batería en ejecución, la necesidad de memora y la portabilidad de este a lenguajes de bajo nivel.
+
 \subsection{Breves conclusiones}
 
-Como se ha mencionado anteriormente las patologías cardíacas son una de las mayores causas de mortalidad en todo el mundo, por ende los supervisores de eventos cardiacos autodisparador podrían tener un efecto directo en la detección y seguimiento de estas patologías. La base principal de estos supervisores radica en la correcta detección de los complejos QRS, por lo que su fiabilidad es de suma importancia.
-
-Por otro lado, la tendencia actual es emplear dispositivos cada vez de menor consumo que suelen ir acompañados de menores recursos y baterías más pequeñas. Por ello cada vez se requieren métodos de detección con menor complejidad computacional pero con una robustez suficiente para ser caracterizados como fiables. Minimizando así las transmisiones de datos a lo estrictamente necesario, ahorrando batería para poder tomar medidas durante un periodo más largo. En este contexto resulta complejo evaluar cuando un algoritmo es suficientemente válido o no debido únicamente a su fiabilidad de detección, influyen también parámetros como el consumo de batería en ejecución, la necesidad de memora y la portabilidad de este a lenguajes de bajo nivel.
+Como se ha mencionado anteriormente las patologías cardíacas son una de las mayores causas de mortalidad en todo el mundo, por ende los supervisores de eventos cardiacos autodisparados podrían tener un efecto directo en la detección y seguimiento de estas patologías. La base principal de estos supervisores radica en la correcta detección de los complejos QRS, no solo de una forma fiable y en tiempo real, sino también con un consumo mínimo de recursos los recursos hardware del sistema.
 
 \section{Objetivo}
 %\label{sec:intro:obj}

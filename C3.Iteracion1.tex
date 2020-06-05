@@ -9,13 +9,13 @@
 % !TEX root = A0.MiTFG.tex
 
 \section{Primera iteración: El núcleo}
-        \subsection{Resumen}
+    \subsection{Resumen}
 
         Esta primera iteración está centrada en la codificación de la estructura básica de la aplicación, creando durante ella la infraestructura que servirá de apoyo para todas las funcionalidades que se implementen en las sucesivas iteraciones, llamado comúnmente como ``Core application''. 
 
         Para dar esta iteración por finalizada, la aplicación del panel deberá ser capaz de enviar las muestras de ECG hacia la plataforma de muestreo y está a su vez ser capaz de recibirlas y enviarlas de vuelta al panel, verificando así la comunicación en el doble sentido.
 
-        \subsection{Requisitos}
+    \subsection{Requisitos}
 
         Los requisitos a realizar en esta iteración son el 1.1, el  2.2  y el  2.1de la tabla de requisitos iniciales. (Tabla \ref{tab:Requisitos}) Estos requisitos dan lugar al siguiente desglose de tareas y subtareas:
 
@@ -36,7 +36,7 @@
                 \end{enumerate}
         \end{enumerate}
 
-        \subsection{Desarrollo}
+    \subsection{Desarrollo}
 
         El primer paso fue la investigación de las bases de datos fisiológicos, concretamente bases de datos con muestras de ECG estandarizadas y ampliamente extendidas. Destacando la MIT-BIH Arrythmia Database (TODO: citar https://www.physionet.org/content/mitdb/1.0.0/). Accediendo a los datos a través del repositorio de Physionet, haciendo uso de su propia API para descargar los datos directamente desde matlab. (TODO: Citas) De este modo, con un simple script, es posible convertir cualquier muestra de datos procedente de dicho repositorio en un fichero de texto estandarizado para la entrada de datos del entorno de pruebas.
 
@@ -85,7 +85,7 @@
                 \label{fig:frame}
         \end{figure}
 
-        \subsection{Pruebas}
+    \subsection{Pruebas}
 
         Para testear la lectura de ficheros en Qt se han implementado una serie de tests unitarios con el objetivo de verificar las lecturas, pero además, de verificar que ante entradas de datos erróneas como ficheros mal formateados el sistema reacciona de forma correcta.
 
@@ -105,7 +105,7 @@
         (TODO: Imagen de los dos ECG)
 
 
-        \subsection{Conclusiones}
+    \subsection{Conclusiones}
 
         Tras la realización de esta iteración quedan sentadas las bases para el correcto desarrollo del proyecto. A su vez se hizo presente la necesidad de implementar una nueva funcionalidad.
 
