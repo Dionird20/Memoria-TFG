@@ -100,3 +100,9 @@
 
         
     \subsection{Conclusiones}
+    
+        Con la finalización de esta iteración queda definida la funcionalidad general, sin embargo para gozar de un primer prototipo cerrado es necesario llevar a cabo algunos cambios en el futuro cercano.
+        
+        Actualmente la interfaz para el algoritmo se ejecuta dentro de la rutina de recepción de los mensajes. Aunque es capaz de llevar a cabo todas la funciones que se le requieren sería más óptimo separar el procesado de la señal en una tarea aparte gestionada por el sistema operativo. Con esto se conseguiría además aislarla para simplificar la medida del rendimiento, permitiendo además emplear los propios mecanismos de FreeRTOS (TODO: Referencia a estos mecanismos) para realizar las medidas de rendimiento necesarias.
+        
+        Esta modificación se incluye como requisito en la tabla final (TODO: Referencia a la tabla final de requisitos) con el código: 2.5, aislamiento del procesado de señal.
