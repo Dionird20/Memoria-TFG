@@ -73,7 +73,7 @@ Como se puede ver en la figura~\ref{fig:ECGelements}, en la señal ECG correspon
 
 En función de las posiciones donde se coloquen los electrodos a la hora de tomar las muestras, las señales se registrarán con una forma u otra. Estas posiciones se conocen como una derivaciones. En el ECG clásico estas derivaciones están estandarizadas en lo que se conoce como Sistema de doce derivaciones: un conjunto de seis derivaciones tomadas en las extremidades y otras seis, denominadas precordiales, que se sitúan en distintos puntos del torax. Las de las extremidades registran los potenciales que se transmiten al plano frontal y las precordiales recogen los potenciales del plano horizontal como puede verse en la figura \ref{fig:ECGelements}. \cite{Harrison}
 
-Podría decirse que cada derivación hace las veces de un observador en un punto diferente, por lo que la señal resultante, que procede de diferencias potenciales con dirección y sentido, variará de polarización en según qué derivación, como puede “variar” el sentido de rotación de disco en función de si es observado desde arriba o desde abajo. LA FIGURA 1.2 EN CONCRETO CORRESPONDE A UN ECG DE UN SUJETO SANO TOMADO EN LA DERIVACIÓN II.
+Podría decirse que cada derivación hace las veces de un observador en un punto diferente, por lo que la señal resultante, que procede de diferencias potenciales con dirección y sentido, variará de polarización en según qué derivación, como puede “variar” el sentido de rotación de disco en función de si es observado desde arriba o desde abajo. La figura (TODO:Insertar referencia  1.2 ) en concreto corresponde a un ECG de un sujeto sano tomado en la derivación II.
 
 \begin{figure}[ht]
 	\centering
@@ -97,7 +97,6 @@ Una vez reconocidos los latidos cardíacos se puede medir la diferencia de tiemp
 	\label{fig:RRInterval}
 \end{figure} 
 
-\clearpage
 En la literatura actual existen numerosos algoritmos muy testeados y eficaces a la hora de detectar el complejo QRS y ,en base a esa detección, calcular la tasa cardíaca. Tradicionalmente se ha desarrollado para ser ejecutados sobre unos datos extraídos previamente y almacenados en memoria. Pero esto no sirve para ser aplicados en tiempo real por diseño, así que en los últimos años se ha estado invirtiendo mucho esfuerzo en desarrollar algoritmos de tiempo real. Siendo el más conocido y uno de los más antiguos el de “Pan Tompkins” basado en el análisis de la pendiente, la intensidad y la duración de los complejos QRS.\cite{PanTompkins} A día de hoy se pueden encontrar numerosos estudios sobre nuevas metodologías para llevar a cabo esta tarea como algoritmos especializados en muestras con mucho ruido\cite{RsSlope} o métodos con diferentes aproximaciones como máquinas de estado finitas\cite{FSM} o empleando coeficientes de wavelet.\cite{Wavelet}
 
 Sin embargo no resulta sencillo encontrar la forma de testar dichos métodos en entornos reales. Para realizar las pruebas pertinentes se hace uso de bases de datos estandarizadas como la MIT-BIH (TODO: Poner esto good con referencia y toh.), evaluando principalmente la tasa de falsos positivos y negativos. (TODO: Referencia Pootja 2017) Un ejemplo de algoritmo para determinar la fiabilidad de un algoritmo se puede encontrar en la norma para marcado CE de los Holter de ECG (TODO: referencia- AENOR, te la mando por correo)
