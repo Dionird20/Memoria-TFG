@@ -35,13 +35,23 @@
         
         El procesado de la señal se ha movido de la rutina encargada de manejar las comunicaciones, donde se alojaba inicialmente de forma provisional, a una tarea propia, desde la que resulta más sencillo calcular el tiempo de procesado y determinar los recursos que están siendo consumidos por la misma. Además independizar estas dos tareas también ayuda a descongestionar las comunicaciones entre el dispositivo y el panel de control. Sin embargo con la adición de las funciones necesarias para el funcionamiento de la tarea se carga de contenido el fichero que finalmente será editable por el usuario, por este motivo, se ha decidido crear un fichero dedicado exclusivamente a las funciones del usuario llamado UserEntry.c y su correspondiente fichero de encabezado UserEntry.h, facilitando así la implementación de los algoritmos a evaluar. 
         
-        Con los cambios incurridos en esta tarea, el diagrama de flujo del ciclo de trabajo del dispositivo de pruebas queda conforme a la figura (TODO: Referencia diagrama de flujo TIVA).
+        Con los cambios incurridos en esta tarea, el diagrama de flujo del ciclo de trabajo del dispositivo de pruebas queda conforme a la figura \ref{fig:tivaFlow}. Aunque se debe tener en cuenta que en realidad las diferentes tareas mostradas en el diagrama no se ejecutan de forma perfectamente secuencial. El diagrama es solo una representación gráfica del flujo de una iteración completa de la ejecución en un caso ideal. En la realidad es posible que lleguen comandos mientras se ejecuta el algoritmo de detección. Para gestionar estas interrupciones el sistema operativo usa las prioridades.
         
-        (TODO: Añadir un diagrama de flujo de los procesos de la TIVA)
+        \begin{figure}
+                \centering
+                        \includegraphics[width = 0.78 \linewidth]{figuras/TivaWorkFlow.pdf}
+                \caption{Diagrama de flujo de las tareas en ejecución del dispositivo de pruebas.}
+                \label{fig:tivaFlow}
+        \end{figure}
         
-        Para la realización de la segunda tarea se ha empleado un Timer de alta frecuencia del dispositivo para contar el número de ciclos de reloj empleados en llevar a cabo cada ciclo de ejecución del algoritmo. El Timer empleado es el Timer1 configurado en modo cuenta periódica de 32 bits ascendente. Para realizar la medida al comienzo de cada ciclo de procesado se le asigna el valor 0 y cuando el procesado concluye se consulta la cuenta del temporizador, siendo esta equivalente al numero de ciclos de reloj transcurridos en el proceso. Si este valor se divide entre la frecuencia del mismo se obtiene una medida del tiempo empleado. La implementación puede observarse en la figura (TODO: Referencia a la figura)
+        Para la realización de la segunda tarea se ha empleado un Timer de alta frecuencia del dispositivo para contar el número de ciclos de reloj empleados en llevar a cabo cada ciclo de ejecución del algoritmo. El Timer empleado es el Timer4 configurado en modo cuenta periódica de 32 bits ascendente. Para realizar la medida al comienzo de cada ciclo de procesado se le asigna el valor 0 y cuando el procesado concluye se consulta la cuenta del temporizador, siendo esta equivalente al numero de ciclos de reloj transcurridos en el proceso. Si este valor se divide entre la frecuencia del mismo se obtiene una medida del tiempo empleado. La implementación puede observarse en la figura \ref{fig:timer}
         
-        (TODO: Adjuntar figura implementación Timer)
+        \begin{figure}[H]
+                \centering
+                        \includegraphics[width = 0.7 \linewidth]{figuras/Timer.PNG}
+                \caption{Implementación del Timer de diagnóstico.}
+                \label{fig:timer}
+        \end{figure}
         
         Para mostrar las medidas de rendimiento al usuario en el panel primero era necesario enviarlas, y para ello se ha decidido emplear otro paquete diferente al de los resultados del algoritmo. De esta forma se evita sobrecargar un paquete que ya es de por sí bastante grande y además se consigue independencia previendo que en alguna iteración posterior se puedan añadir nuevos indicadores de rendimiento, que pueden incluso no depender de la ejecución del algoritmo. Respecto a la visualización de los datos, de momento solo se han añadido las salidas de texto correspondiente con la mínima explicación necesaria, posponiendo los detalles de interfaz de usuario para más adelante.
         
