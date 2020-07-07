@@ -21,7 +21,7 @@
             \item Aislamiento del procesado de señales en una tarea exclusiva.
             \item Extraer las medidas de rendimiento del sistema operativo.
             \item Mostrar dichas medidas en el panel de usuario de QT.
-            \item Comparar los resultados del algoritmo con las anotaciones de la señal.
+            \item (Pospuesta) Comparar los resultados del algoritmo con las anotaciones de la señal.
             \begin{enumerate}
                 \item Extraer las anotaciones de la base de datos y añadirlas al fichero de entrada.
                 \item Implementar la lectura de las anotaciones en el panel de usuario.
@@ -44,7 +44,7 @@
                 \label{fig:tivaFlow}
         \end{figure}
         
-        Para la realización de la segunda tarea se ha empleado un Timer de alta frecuencia del dispositivo para contar el número de ciclos de reloj empleados en llevar a cabo cada ciclo de ejecución del algoritmo. El Timer empleado es el Timer4 configurado en modo cuenta periódica de 32 bits ascendente. Para realizar la medida al comienzo de cada ciclo de procesado se le asigna el valor 0 y cuando el procesado concluye se consulta la cuenta del temporizador, siendo esta equivalente al numero de ciclos de reloj transcurridos en el proceso. Si este valor se divide entre la frecuencia del mismo se obtiene una medida del tiempo empleado. La implementación puede observarse en la figura \ref{fig:timer}
+        Para la realización de la segunda tarea se ha empleado un Timer de alta frecuencia del dispositivo para contar el número de ciclos de reloj empleados en llevar a cabo cada ciclo de ejecución del algoritmo. El Timer empleado es el Timer4 configurado en modo cuenta periódica de 32 bits ascendente. Para realizar la medida al comienzo de cada ciclo de procesado se le asigna el valor 0 y cuando el procesado concluye se consulta la cuenta del temporizador, siendo esta equivalente al numero de ciclos de reloj transcurridos en el proceso. Si este valor se divide entre la frecuencia del mismo se obtiene una medida del tiempo empleado. La implementación puede observarse en la figura \ref{fig:timer}.
         
         \begin{figure}[H]
                 \centering
@@ -53,10 +53,32 @@
                 \label{fig:timer}
         \end{figure}
         
-        Para mostrar las medidas de rendimiento al usuario en el panel primero era necesario enviarlas, y para ello se ha decidido emplear otro paquete diferente al de los resultados del algoritmo. De esta forma se evita sobrecargar un paquete que ya es de por sí bastante grande y además se consigue independencia previendo que en alguna iteración posterior se puedan añadir nuevos indicadores de rendimiento, que pueden incluso no depender de la ejecución del algoritmo. Respecto a la visualización de los datos, de momento solo se han añadido las salidas de texto correspondiente con la mínima explicación necesaria, posponiendo los detalles de interfaz de usuario para más adelante.
+        Con un objetivo similar también se hace uso de la función ``vTaskGetInfo()'', perteneciente al sistema operativo, para extraer datos del estado de la CPU y el uso de memoria de la tarea de procesado. A diferencia del tiempo medido con el timer los datos de uso de CPU extraídos con esta función no son exactos pero si suficientes para dar una idea general de la carga de trabajo. Respecto a la memoria, se indica la cantidad de memoria libre de la que dispone la tarea, por lo que valores altos son ideales, si este número llegara a cero significaría que la tarea se ha desbordado. 
+        
+        Para mostrar las medidas de rendimiento al usuario en el panel primero era necesario enviarlas, y para ello se ha decidido emplear otro paquete diferente al de los resultados del algoritmo. De esta forma se evita sobrecargar un paquete que ya es de por sí bastante grande y además se consigue independencia previendo que en alguna iteración posterior se puedan añadir nuevos indicadores de rendimiento, que pueden incluso no depender de la ejecución del algoritmo.
+        
+        Respecto a la visualización de los datos, de momento solo se han añadido las salidas de texto correspondiente con la mínima explicación necesaria, posponiendo los detalles de interfaz de usuario para más adelante. Los valores son expuestos de manera visual y agrupada para su fácil comprensión, siguiendo el ejemplo de la figura \ref{fig:performance}.
+        
+        \begin{figure}[H]
+                \centering
+                        \includegraphics[width = 0.9 \linewidth]{figuras/Performance.PNG}
+                \caption{Visualización de los datos de rendimiento.}
+                \label{fig:performance}
+        \end{figure}
         
     \subsection{Pruebas}
         
+        De las tareas realizadas en esta iteración, la única que requiere de pruebas es la extracción de los datos de rendimiento de la CPU, concretamente el caso de la implementación del timer. Para ello se ha empleado la función ``SysCtlDelay()'' capaz de introducir un retardo fijo en la ejecución de una tarea. Midiendo el tiempo introducido por dicha función empleando el timer podemos obtener garantías de que la medida se está llevando a cabo correctamente. Como se puede ver en la figura \ref{fig:performanceTest} la medición obtenida es coherente con los datos introducidos.
+        
+        \begin{figure}[H]
+                \centering
+                        \includegraphics[width = 0.9 \linewidth]{figuras/PerformanceTest.pdf}
+                \caption{Prueba medición tiempo de ejecución del algoritmo.}
+                \label{fig:performanceTest}
+        \end{figure}
+
     \subsection{Conclusiones}
     
-    (TODO: La tarea 4 ha resultado ser mucho más compleja de lo esperado inicialmente añadirla con detalle a los requisitos)
+        Después de invertir bastante tiempo en las funciones de diagnostico del sistema operativo en tiempo real para realizar las medidas de rendimiento estas han demostrado ser bastante imprecisas, especialmente aquellas dedicadas a medir las cargas de CPU. Pues todas se basan en un contador desde el momento en que se inició el sistema, por lo que si las tareas no se ejecutan a pleno rendimiento desde el comienzo los promedios van a estar muy desviados de la realidad, o por el contrario, van a tardar bastante tiempo en dar un resultado estable.
+        
+        Por otro lado se ha decidido posponer el análisis de las anotaciones, dada la elevada complejidad y carga de trabajo de la tarea, para dedicar una iteración completa a ese cometido.
