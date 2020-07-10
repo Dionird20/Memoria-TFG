@@ -8,7 +8,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % !TEX root = A0.MiTFG.tex
 
-\section{Tercera iteración: Prototipo}
+\section{Tercera iteración: Rendimiento}
     \subsection{Resumen}
         
         Con esta iteración se pretende añadir todo lo referente a las mediciones de rendimiento del algoritmo. Tratando de concluir el prototipo inicial. Esta iteración aún se centrará exclusivamente en la funcionalidad del proyecto dejando de lado todas las cuestiones referentes a diseño de interfaces y experiencia de usuario para iteraciones posteriores.
@@ -21,14 +21,6 @@
             \item Aislamiento del procesado de señales en una tarea exclusiva.
             \item Extraer las medidas de rendimiento del sistema operativo.
             \item Mostrar dichas medidas en el panel de usuario de QT.
-            \item (Pospuesta) Comparar los resultados del algoritmo con las anotaciones de la señal.
-            \begin{enumerate}
-                \item Extraer las anotaciones de la base de datos y añadirlas al fichero de entrada.
-                \item Implementar la lectura de las anotaciones en el panel de usuario.
-                \item Crear un modelo de almacenamiento que facilite la implementación de la norma (TODO: Norma de las evaluaciones)
-                \item Implementar las ecuaciones descritas en la norma (TODO: Norma de las evaluaciones)
-                \item Mostrar al usuario los resultados de la validación del algoritmo.
-            \end{enumerate}
         \end{enumerate}
         
     \subsection{Desarrollo}
@@ -80,5 +72,3 @@
     \subsection{Conclusiones}
     
         Después de invertir bastante tiempo en las funciones de diagnostico del sistema operativo en tiempo real para realizar las medidas de rendimiento estas han demostrado ser bastante imprecisas, especialmente aquellas dedicadas a medir las cargas de CPU. Pues todas se basan en un contador desde el momento en que se inició el sistema, por lo que si las tareas no se ejecutan a pleno rendimiento desde el comienzo los promedios van a estar muy desviados de la realidad, o por el contrario, van a tardar bastante tiempo en dar un resultado estable.
-        
-        Por otro lado se ha decidido posponer el análisis de las anotaciones, dada la elevada complejidad y carga de trabajo de la tarea, para dedicar una iteración completa a ese cometido.

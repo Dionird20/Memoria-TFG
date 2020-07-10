@@ -64,11 +64,11 @@
 \newcommand{\eenu}{\end{enu}} 	% End enumeration
 
 %Comando para escribir código Python
-\newcommand{\code}[3]{
+\newcommand{\code}[4]{
 \begin{minipage}{0.96\linewidth}
 \begin{center}
     \lstinputlisting[
-        language   = Python,
+        language   = #4,
         frame      = lines,
         framexleftmargin = 5mm,
         caption    = {#1},
@@ -166,3 +166,6 @@
 
 % Modifica el interlineado
 %\renewcommand{\baselinestretch}{1.5}
+
+\addto{\captionsspanish}{
+	\renewcommand{\lstlistlistingname}{Índice de códigos} }

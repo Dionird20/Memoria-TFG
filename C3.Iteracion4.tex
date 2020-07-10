@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Documento LaTeX 																						%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Título:		Capítulo 3
+% Autor:  	Ignacio Moreno Doblas
+% Fecha:  	2014-02-01, actualizado 2019-11-11
+% Versión:	0.5.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% !TEX root = A0.MiTFG.tex
+
+\section{Cuarta iteración: Fiabilidad}
+    \subsection{Resumen}
+        
+        En esta iteración se ha implementado todo lo relacionado con el cálculo de la fiabilidad del algoritmo siguiendo las indicaciones de la norma UNE-EN 60601-2-47:2002. Una vez concluida esta fase del desarrollo el proyecto ya será plenamente funcional. Aunque se deja para una etapa posterior lo relacionado con la interfaz de usuario.
+        
+    \subsection{Requisitos}
+    
+        Para esta iteración solo se pretende satisfacer un requisito, el 1.3.5 de la tabla inicial (tabla \ref{tab:Requisitos}). Para ello se ha dividido el requisito en las diferentes tareas:
+        
+        \begin{enumerate}
+            \item Extraer las anotaciones de la base de datos y añadirlas al fichero de entrada.
+            \item Implementar el control de las anotaciones en el panel de usuario.
+            \item Crear un modelo de almacenamiento para las anotaciones que facilite la implementación de la norma (TODO: Norma de las evaluaciones)
+            \item Implementar las ecuaciones descritas en la norma (TODO: Norma de las evaluaciones)
+            \item Mostrar al usuario los resultados de la validación del algoritmo.
+        \end{enumerate}
+    
+    \subsection{Desarrollo}
+        Aunque pueda parecer simple, medir la eficiencia de un algoritmo de detección QRS no es sencillo y varía en gran medida en función de los distintos tipos de latidos que se quieran detectar con el algoritmo. En las bases de datos hay numerosos tipos de anotaciones con una amplia variedad de significados, además, es posible que distintas bases de datos empleen diferentes anotaciones para referirse al mismo evento cardíaco. 
+     
+        Para concretar se ha decidido centrar el proyecto en el sistema de anotaciones de la MIT-BIH, pero incluso dentro de esta es necesario filtrar cuales anotaciones van a tenerse en cuenta y cuales no. Para ello, una rápida consulta a la norma UNE-EN 60601-2-47:2002 concluye que las necesarias para evaluar la fiabilidad de un algoritmo de detección QRS son las siguientes:
+        
+        \begin{itemize}
+            \item \textbf{N:} Cualquier latido que no sea S,V,F o Q
+            \item \textbf{S:} Latido supraventricular o ectópico.
+            \item \textbf{V:} Latido ventricular ectópico o prematuro.
+            \item \textbf{F:} Mezcla de latido ventricular y normal.
+            \item \textbf{Q:} Latido de marcapasos o mezcla de marcapasos y normal.
+        \end{itemize}
+        
+        
+        Por desgracia la nomenclatura de la MIT-BIH no coincide, por lo que es necesario hacer algunas conversiones previas. Para ello se han integrado directamente en el script de Matlab implementado durante la primera iteración. Facilitando al usuario final un método de adquirir los datos de la MIT-BIH listos para ser usados. El script resultante puede ser comprobado en la figura (//TODO: Referencia a la figura del nuevo script de matlab).
+        
+        \begin{minipage}{0.9 \linewidth}
+	        \code{Script de Matlab para consultar la base de datos}{code/GetSampleAsTextWithAnnotations.m}{code:matlabAnn}{matlab}
+        \end{minipage}
+     
+    \subsection{Pruebas}
+    \subsection{Conclusiones}
