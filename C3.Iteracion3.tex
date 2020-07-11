@@ -36,14 +36,9 @@
                 \label{fig:tivaFlow}
         \end{figure}
         
-        Para la realización de la segunda tarea se ha empleado un Timer de alta frecuencia del dispositivo para contar el número de ciclos de reloj empleados en llevar a cabo cada ciclo de ejecución del algoritmo. El Timer empleado es el Timer4 configurado en modo cuenta periódica de 32 bits ascendente. Para realizar la medida al comienzo de cada ciclo de procesado se le asigna el valor 0 y cuando el procesado concluye se consulta la cuenta del temporizador, siendo esta equivalente al numero de ciclos de reloj transcurridos en el proceso. Si este valor se divide entre la frecuencia del mismo se obtiene una medida del tiempo empleado. La implementación puede observarse en la figura \ref{fig:timer}.
+        Para la realización de la segunda tarea se ha empleado un Timer de alta frecuencia del dispositivo para contar el número de ciclos de reloj empleados en llevar a cabo cada ciclo de ejecución del algoritmo. El Timer empleado es el Timer4 configurado en modo cuenta periódica de 32 bits ascendente. Para realizar la medida al comienzo de cada ciclo de procesado se le asigna el valor 0 y cuando el procesado concluye se consulta la cuenta del temporizador, siendo esta equivalente al numero de ciclos de reloj transcurridos en el proceso. Si este valor se divide entre la frecuencia del mismo se obtiene una medida del tiempo empleado. La implementación puede observarse en el extracto \ref{code:timer}.
         
-        \begin{figure}[H]
-                \centering
-                        \includegraphics[width = 0.7 \linewidth]{figuras/Timer.PNG}
-                \caption{Implementación del Timer de diagnóstico.}
-                \label{fig:timer}
-        \end{figure}
+        \code{Implementación del Timer de diagnóstico.}{code/timer.cpp}{code:timer}{C++}
         
         Con un objetivo similar también se hace uso de la función ``vTaskGetInfo()'', perteneciente al sistema operativo, para extraer datos del estado de la CPU y el uso de memoria de la tarea de procesado. A diferencia del tiempo medido con el timer los datos de uso de CPU extraídos con esta función no son exactos pero si suficientes para dar una idea general de la carga de trabajo. Respecto a la memoria, se indica la cantidad de memoria libre de la que dispone la tarea, por lo que valores altos son ideales, si este número llegara a cero significaría que la tarea se ha desbordado. 
         

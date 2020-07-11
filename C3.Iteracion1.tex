@@ -39,13 +39,8 @@
     \subsection{Desarrollo}
 
         El primer paso fue la investigación de las bases de datos fisiológicos, concretamente bases de datos con muestras de ECG estandarizadas y ampliamente extendidas. Destacando la MIT-BIH Arrythmia Database (TODO: citar https://www.physionet.org/content/mitdb/1.0.0/). Accediendo a los datos a través del repositorio de Physionet, haciendo uso de su propia API para descargar los datos directamente desde matlab. (TODO: Citas) De este modo, con un simple script, es posible convertir cualquier muestra de datos procedente de dicho repositorio en un fichero de texto estandarizado para la entrada de datos del entorno de pruebas.
-
-        \begin{figure} 
-                \centering
-                        \includegraphics[width =\linewidth]{figuras/MatlabFunc.png}
-                \caption{Función de Matlab para extraer los datos del repositorio y formatearlos como texto}
-                \label{fig:MAtlabFunc}
-        \end{figure}
+        
+         \code{Función de Matlab para extraer los datos del repositorio y formatearlos como texto.}{code/MatlabFirst.m}{code:sampleAsText}{Octave}
 
         El siguiente paso consiste en leer dichos ficheros de texto desde el panel de usuario y preparar los datos para enviarlos al dispositivo de pruebas. Este proceso tiene dos puntos claves, la lectura debe ser periódica y su frecuencia debe ser igual que la frecuencia de muestreo de las muestras. Para lograr este cometido se ha desarrollado un script siguiendo la estructura del diagrama \ref{fig:SimpleFileRead}. 
 
@@ -56,7 +51,7 @@
                 \label{fig:SimpleFileRead}
         \end{figure}
 
-        Para sincronizar las partes del script y garantizar la compatibilidad y sincronismo con futuras funcionalidades del panel de control se hace uso de los SLOT y las SIGNAL de Qt. Estos elementos son el pilar fundamental de las aplicaciones desarrolladas con Qt ya que actúan como canales de mensajes, permitiendo la sincronización de todas las funciones de la aplicación sin caer en fuertes restricciones por acoplamiento de las diferentes funcionalidades.
+        Para sincronizar las partes del script y garantizar la compatibilidad con futuras funcionalidades del panel de control se hace uso de los SLOT y las SIGNAL de Qt. Estos elementos son el pilar fundamental de las aplicaciones desarrolladas con Qt ya que actúan como canales de mensajes, permitiendo la sincronización de todas las funciones de la aplicación sin caer en fuertes restricciones por acoplamiento de las diferentes funcionalidades.
 
         Como se puede ver en el diagrama \ref{fig:CompleteFileRead} se han añadido también diferentes entradas para que el usuario interaccione. Estas son una rueda selectora para configurar la frecuencia de forma manual, un botón para realizar la lectura de la frecuencia de muestreo directamente desde el fichero y un tercero que daría comienzo a la prueba. En la figura \ref{fig:frecKnob} se puede ver la disposición de estos elementos.
 

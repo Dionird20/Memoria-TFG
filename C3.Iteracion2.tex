@@ -62,15 +62,9 @@
 
         La implementación se ha realizado mediante punteros a funciones. Se ha definido un tipo correspondiente a un puntero a una función con la firma establecida. De esta forma el usuario puede asignar al puntero cualquier función que desarrolle mientras satisfaga la firma impuesta por el mismo, haciendo las veces de interfaz.
         
-        En la figura \ref{fig:functionPointer} puede observarse de forma compacta la implementación del funcionamiento previamente descrito. 
-
-        \begin{figure}[H]
-                \centering
-                        \includegraphics[width =\linewidth]{figuras/FunctionPointer.PNG}
-                \caption{Gráfica que muestra los resultados del análisis llevado a cabo por el algoritmo.}
-                \label{fig:functionPointer}
-        \end{figure}
+        En el extracto \ref{code:interface} puede observarse de forma compacta la implementación del funcionamiento previamente descrito. 
         
+        \code{Abstracto de la interfaz para el algoritmo del usuario.}{code/interface.cpp}{code:interface}{C++}
 
         Para la tercera tarea se han decidido implementar varios mecanismos para mostrar los resultados al usuario. Se ha añadido una gráfica empleando el widget QwtPlot donde se muestra la señal ECG leída del fichero en tiempo real. Sobre ella se dibujan los picos R detectados por el algoritmo. Además se ofrece la posibilidad de dibujar el threshold de detección si el algoritmo emplea uno y un recuadro donde se muestra el valor de la tasa cardíaca instantánea medida. En la figura \ref{fig:resultsBasic} puede observarse el formato de salida.
 

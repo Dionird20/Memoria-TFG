@@ -26,7 +26,7 @@ void TestAnnotations::CorrectFromfiles(){
     for (int i = 1;i <= 5; i++) {
         for (int j = 1; j <= 5; j++) {
             int sum = annManager.CrossSum(annManager.GetAnnotationChar(i),
-                                               annManager.GetAnnotationChar(j));
+                annManager.GetAnnotationChar(j));
             results[i][j] = sum;
         }
     }
@@ -38,16 +38,11 @@ void TestAnnotations::CorrectFromfiles(){
         int sum = annManager.CalculateFP(annManager.GetAnnotationChar(i));
         results[i][6] = sum;
     }
-    e_results[1][1] = 1;
-    e_results[2][2] = 1;
-    e_results[3][3] = 1;
-    e_results[4][4] = 1;
-    e_results[5][5] = 1;
-    e_results[1][3] = 1;
-    e_results[3][2] = 1;
-    e_results[1][4] = 1;
-    e_results[1][6] = 1;
-    e_results[6][1] = 1;
+    e_results[1][1] = 1; e_results[2][2] = 1;
+    e_results[3][3] = 1; e_results[4][4] = 1;
+    e_results[5][5] = 1; e_results[1][3] = 1;
+    e_results[3][2] = 1; e_results[1][4] = 1;
+    e_results[1][6] = 1; e_results[6][1] = 1;
     for (int i = 0;i <= 6; i++) {
         for (int j = 0; j <= 6; j++) {
             QCOMPARE(results[i][j],e_results[i][j]);
