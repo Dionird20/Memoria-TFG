@@ -23,7 +23,7 @@
 
         \subsection{Diagramas}
 
-        Una vez especificados el hardware y software a emplear se vuelve posible, y necesario, profundizar en los diagramas realizados anteriormente añadiendo cuestiones ya específicas de la solución escogida para el desarrollo del proyecto. Teniendo en cuenta las características de la tecnología escogida se ha realizado el siguiente diagrama (TODO: Figura x) detallando un concepto general del flujo de trabajo del proyecto.
+        Una vez especificados el hardware y software a emplear se vuelve posible, y necesario, profundizar en los diagramas realizados anteriormente añadiendo cuestiones ya específicas de la solución escogida para el desarrollo del proyecto. Teniendo en cuenta las características de la tecnología escogida se ha realizado el diagrama \ref{fig:InternalBlocksDiagram}, detallando el flujo de trabajo del proyecto.
 
         \begin{figure}[H]  
             \centering
@@ -32,7 +32,7 @@
                 \label{fig:InternalBlocksDiagram}
         \end{figure}
  
-        La parte izquierda representa la funcionalidad mínima necesaria para el panel de control y la parte derecha el flujo de trabajo del hardware de testeo. En un comienzo el factor “Tiempo Real” vendrá determinado por un timer en el panel de control que enviará muestras del ECG de forma cíclica a la frecuencia de muestreo que este se encuentre registrado, simulando así los tiempos biológicos reales de dichas señales. 
+        La parte izquierda de la figura \ref{fig:InternalBlocksDiagram} representa la funcionalidad mínima necesaria para el panel de control y la parte derecha el flujo de trabajo del hardware de testeo. En un comienzo el factor “Tiempo Real” vendrá determinado por un timer en el panel de control que enviará muestras del ECG de forma cíclica a la frecuencia de muestreo que este se encuentre registrado, simulando así los tiempos biológicos reales de dichas señales. 
         
         Los datos son almacenados en un buffer circular, el cual una vez lleno comenzará a sobrescribir los datos más antiguos. El algoritmo introducido deberá emplear únicamente los datos almacenados en el buffer circular para llevar a cabo el análisis. Como en la vuelta de los datos no es tan importante simular el tiempo real se ha decidido devolverlos al panel en forma de paquetes, saturando menos la vía de comunicaciones.
         

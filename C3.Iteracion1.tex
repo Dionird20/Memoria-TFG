@@ -38,7 +38,7 @@
 
     \subsection{Desarrollo}
 
-        El primer paso fue la investigación de las bases de datos fisiológicos, concretamente bases de datos con muestras de ECG estandarizadas y ampliamente extendidas. Destacando la MIT-BIH Arrythmia Database (TODO: citar https://www.physionet.org/content/mitdb/1.0.0/). Accediendo a los datos a través del repositorio de Physionet, haciendo uso de su propia API para descargar los datos directamente desde matlab. (TODO: Citas) De este modo, con un simple script, es posible convertir cualquier muestra de datos procedente de dicho repositorio en un fichero de texto estandarizado para la entrada de datos del entorno de pruebas.
+        Como ya se mencionó en el capítulo de Introducción, existen diversas bases de datos fisiológicos, concretamente en este proyecto se usa la MIT-BIH Arrythmia Database. \cite{MIT-BIH}, que contiene  muestras de ECG anotadas por especialistas en cardiología y cuyo uso está ampliamente extendido.   Es posible acceder a sus datos a través del repositorio de Physionet, y, haciendo uso de su propia API, descargar los datos directamente desde matlab.\cite{phisionet} De este modo, con un simple script, es posible convertir cualquier muestra de datos procedente de dicho repositorio en un fichero de texto estandarizado para la entrada de datos del entorno de pruebas.
         
          \code{Función de Matlab para extraer los datos del repositorio y formatearlos como texto.}{code/MatlabFirst.m}{code:sampleAsText}{Octave}
 
