@@ -38,7 +38,7 @@
 
     \subsection{Desarrollo}
 
-        Como ya se mencionó en el capítulo de Introducción, existen diversas bases de datos fisiológicos, concretamente en este proyecto se usa la MIT-BIH Arrythmia Database. \cite{MIT-BIH}, que contiene  muestras de ECG anotadas por especialistas en cardiología y cuyo uso está ampliamente extendido.   Es posible acceder a sus datos a través del repositorio de Physionet, y, haciendo uso de su propia API, descargar los datos directamente desde matlab.\cite{phisionet} De este modo, con un simple script, es posible convertir cualquier muestra de datos procedente de dicho repositorio en un fichero de texto estandarizado para la entrada de datos del entorno de pruebas.
+        Como ya se mencionó en el capítulo de Introducción, existen diversas bases de datos fisiológicos, concretamente en este proyecto se usa la MIT-BIH Arrythmia Database \cite{MIT-BIH}, que contiene  muestras de ECG anotadas por especialistas en cardiología y cuyo uso está ampliamente extendido. Es posible acceder a sus datos a través del repositorio de Physionet \cite{phisionet}, y, haciendo uso de su propia API, descargar los datos directamente desde matlab. De este modo, con un simple script, es posible convertir cualquier muestra de datos procedente de dicho repositorio en un fichero de texto estandarizado para la entrada de datos del entorno de pruebas.
         
          \code{Función de Matlab para extraer los datos del repositorio y formatearlos como texto.}{code/MatlabFirst.m}{code:sampleAsText}{Octave}
 
@@ -51,9 +51,9 @@
                 \label{fig:SimpleFileRead}
         \end{figure}
 
-        Para sincronizar las partes del script y garantizar la compatibilidad con futuras funcionalidades del panel de control se hace uso de los SLOT y las SIGNAL de Qt. Estos elementos son el pilar fundamental de las aplicaciones desarrolladas con Qt ya que actúan como canales de mensajes, permitiendo la sincronización de todas las funciones de la aplicación sin caer en fuertes restricciones por acoplamiento de las diferentes funcionalidades.
+        Para sincronizar las partes del script y garantizar la compatibilidad con futuras funcionalidades del panel de control se hace uso de los SLOT y las SIGNAL de Qt. Estos elementos son el pilar fundamental de las aplicaciones desarrolladas con Qt ya que actúan como canales de mensajes, permitiendo la sincronización de todas las funciones de la aplicación sin caer en fuertes restricciones por acoplamiento de las diferentes funcionalidades. El concepto es sencillo, cuando sucede un evento se emite una SIGNAL concreta para dicho evento, que además puede incluir datos como parámetros, y cualquier número de SLOTS que estén configurados para recibir dicha SIGNAL se ejecutan en paralelo. 
 
-        Como se puede ver en el diagrama \ref{fig:CompleteFileRead} se han añadido también diferentes entradas para que el usuario interaccione. Estas son una rueda selectora para configurar la frecuencia de forma manual, un botón para realizar la lectura de la frecuencia de muestreo directamente desde el fichero y un tercero que daría comienzo a la prueba. En la figura \ref{fig:frecKnob} se puede ver la disposición de estos elementos.
+        Como se puede ver en el diagrama \ref{fig:CompleteFileRead} se han añadido también diferentes entradas para que el usuario interaccione. Estas son una rueda selectora para configurar la frecuencia de forma manual, un botón para realizar la lectura de la frecuencia de muestreo directamente desde el fichero y un tercero que daría comienzo a la prueba. En la figura \ref{fig:frecKnob} se puede ver la disposición de estos elementos en el panel.
 
         \begin{figure} [H] 
                 \centering
@@ -62,7 +62,7 @@
                 \label{fig:CompleteFileRead}
         \end{figure}
 
-        Antes de continuar con la información sobre el envío de los datos, es necesario detenerse en la gestión del tiempo real y el sincronismo dentro del dispositivo de pruebas, concretamente la Tiva (TM4C123GXL). Para esta finalidad se ha hecho uso de un sistema operativo de tiempo real de software libre llamado FREERTOS (TODO: Cita). Gracias a él se pueden gestionar y sincronizar tareas asignándoles diferentes prioridades, solucionando el problema de tener que gestionar las comunicaciones a la vez que se realizan las pruebas de rendimiento, ganando en el proceso además mayor independencia entre las tareas reduciendo acoplamientos.
+        Antes de continuar con la implementación del envío de los datos, es necesario detenerse en la gestión del tiempo real y el sincronismo dentro del dispositivo de pruebas, concretamente la Tiva (TM4C123GXL). Para esta finalidad se ha hecho uso de un sistema operativo de tiempo real de software libre llamado FREERTOS (TODO: Cita). Gracias a él se pueden gestionar y sincronizar tareas asignándoles diferentes prioridades, solucionando el problema de tener que gestionar las comunicaciones a la vez que se realizan las pruebas de rendimiento, ganando en el proceso además total independencia entre las tareas reduciendo acoplamientos.
         
         \begin{figure}[H]
                 \centering
@@ -71,7 +71,13 @@
                 \label{fig:frecKnob}
         \end{figure}
 
-        Para la comunicación entre el dispositivo de pruebas y el panel de usuario se hace uso de un puerto serie. Para garantizar la correcta transmisión de los datos se emplean dos mecanismos muy extendidos, checksum y byte stuffing. Pudiendo representar el protocolo en el diagrama \ref{fig:frame}. Cada salto de línea representa cada nueva etapa del protocolo de envío. El ejemplo expuesto contiene un byte de datos que coincide con el byte de final de trama, representado como “END”, a fin de ejemplificar el funcionamiento del método de stuffing escogido.
+        Para la comunicación entre el dispositivo de pruebas y el panel de usuario se hace uso de un puerto serie. Para garantizar la correcta transmisión de los datos se emplean dos mecanismos ampliamente extendidos por su eficacia y relativa sencillez, checksum y byte stuffing. 
+        
+        El checksum es el mecanismo encargado de comprobar que no hayan habido errores en la comunicación, para ello se calcula un número en función de los bytes de la trama y se adjunta a esta, de forma que al recibir los datos, puede repetirse la operación y comprobar ambos valores. 
+        
+        El byte stuffing por otro lado define un mecanismo por el cual se protegen los caracteres especiales de la trama. Por motivos azarosos es posible que alguno de los bytes enviados coincida con un byte reservado correspondiente a algún carácter especial  como podría ser el de fin de trama. El byte stuffing empleado en este proyecto consiste en la incorporación de un carácter especial de salto justo delante de cada carácter reservado que se localice. De esta forma, en recepción se puede tratar un carácter especial como un byte normal si frente a el se encuentra el carácter de salto. No existe ningún problema si la cadena original contiene un byte idéntico al carácter de salto, pues esto resultaría en la incorporación de un carácter de salto frente al original, tratando a este como un byte normal en recepción.
+        
+        Para complementar lo explicado sobre el protocolo de comunicación, este se ha representado en el diagrama \ref{fig:frame}. Cada salto de línea representa cada nueva etapa del protocolo de envío. El ejemplo expuesto contiene un byte de datos que coincide con el byte de final de trama, representado como “END”, a fin de ejemplificar el funcionamiento del método de stuffing.
 
         \begin{figure}[H]
                 \centering
@@ -82,7 +88,7 @@
 
     \subsection{Pruebas}
 
-        Para testear la lectura de ficheros en Qt se han implementado una serie de tests unitarios con el objetivo de verificar las lecturas, pero además, de verificar que ante entradas de datos erróneas como ficheros mal formateados el sistema reacciona de forma correcta.
+        Para testear la lectura de ficheros en Qt se han implementado una serie de tests unitarios con el objetivo de verificar las lecturas correctas, pero además, de verificar que ante entradas de datos erróneas como ficheros mal formateados el sistema reacciona de forma correcta.
 
         Los casos sometidos a test han sido:
 
