@@ -15,20 +15,20 @@
         
         \subsection{Desarrollo}
 
-        El proyecto consta de dos partes fundamentales. Primeramente un panel de control desde el cual un usuario podrá modificar los datos de entrada y observar los resultados del análisis de efectividad y eficiencia de los algoritmos. En segundo lugar debe existir un dispositivo físico, el cual lleve a cabo la ejecución de los algoritmos en tiempo real mientras realiza medidas de rendimiento sobre ellos.
+        El sistema consta de dos partes fundamentales. Primeramente un panel de control desde el cual un usuario podrá modificar los datos de entrada y observar los resultados del análisis de efectividad y eficiencia de los algoritmos. En segundo lugar debe existir un dispositivo físico, el cual lleve a cabo la ejecución de los algoritmos en tiempo real mientras realiza medidas de rendimiento sobre ellos.
 
         Para el panel de control se ha decidido emplear QT, concretamente la versión 4.9.0. Con esto se consigue evitar el tener que gestionar los componentes gráficos de la interfaz, pudiendo centrar el esfuerzo mayoritariamente en el tratamiento de los datos y las interacciones de usuario.
         
-        Para el hardware del dispositivo en tiempo real se ha escogido una Tiva C Series (TM4C123GXL) por sus numerosos modos de bajo consumo y familiaridad con el dispositivo.        
+        Para el hardware del dispositivo en tiempo real se ha escogido una Tiva C Series (TM4C123GXL) por su relativa potencia y familiaridad con el dispositivo.        
 
         \subsection{Diagramas}
 
-        Una vez especificados el hardware y software a emplear se vuelve posible, y necesario, profundizar en los diagramas realizados anteriormente añadiendo cuestiones ya específicas de la solución escogida para el desarrollo del proyecto. Teniendo en cuenta las características de la tecnología escogida se ha realizado el diagrama \ref{fig:InternalBlocksDiagram}, detallando el flujo de trabajo del proyecto.
+        Una vez especificados el hardware y software a emplear se vuelve posible, y necesario, profundizar en los diagramas realizados anteriormente añadiendo cuestiones ya específicas de la solución escogida para el desarrollo del proyecto. Teniendo en cuenta las características de la tecnología escogida se ha realizado el diagrama \ref{fig:InternalBlocksDiagram}, detallando el flujo de trabajo del sistema.
 
         \begin{figure}[H]  
             \centering
                 \includegraphics[width =\linewidth]{figuras/InternBlockDiagram.pdf}
-                \caption{Diagrama de bloques general}
+                \caption{Diagrama de flujo de trabajo del sistema}
                 \label{fig:InternalBlocksDiagram}
         \end{figure}
  
@@ -42,4 +42,4 @@
 
         Las decisiones tomadas se han basado mayoritariamente en la familiaridad con las tecnologías escogidas, pero no por ello se ha desestimado lo apropiada que son para el alcance del proyecto.
         
-        Decidida la estructura general del proyecto, se puede comenzar la primera iteración de desarrollo, en la que se implementará la funcionalidad básica, sentando las bases para todo el desarrollo posterior.
+        Decidida la estructura general del sistema, se puede comenzar la primera iteración de desarrollo, en la que se implementará la funcionalidad básica, sentando las bases para todo el desarrollo posterior.

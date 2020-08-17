@@ -23,13 +23,14 @@
             \begin{enumerate}
                 \item Almacenar la señal de entrada en un buffer.
                 \item Definir la interfaz
+                \item Implementar un algoritmo simple de detección.
             \end{enumerate}
             \item Mostrar los resultados del análisis en el panel de usuario.
         \end{enumerate}
         
     \subsection{Desarrollo}
         
-        La primera tarea se ha resuelto mediante el empleo de un "QListView"  (TODO:  referencia https://doc.qt.io/archives/qt-4.8/qlistview.html) al que se le ha configurado una carpeta raíz donde se colocarán todos los ficheros de datos junto con unos filtros para que solo muestre estos. Haciendo uso del SLOT \char`_clicked se puede obtener la ruta al fichero que clickea el usuario dentro del widget, permitiendo pasarla como parámetro a la función de lectura implementada en la anterior iteración. 
+        La primera tarea, \textit{seleccionar la entrada de datos}, se ha resuelto mediante el empleo de un "QListView"  (TODO:  referencia https://doc.qt.io/archives/qt-4.8/qlistview.html) al que se le ha configurado una carpeta raíz donde se colocarán todos los ficheros de datos junto con unos filtros para que solo muestre estos. Haciendo uso del SLOT \char`_clicked se puede obtener la ruta al fichero que clickea el usuario dentro del widget, permitiendo pasarla como parámetro a la función de lectura implementada en la anterior iteración. 
         
         \begin{figure}[H] 
                 \centering
@@ -38,7 +39,7 @@
                 \label{fig:fileView}
         \end{figure}
         
-        Para la tarea 2.a se ha implementado un buffer circular empleando una estructura que contiene un array de tipo int32 de 1024 posiciones y una variable para indicar el índice 0 relativo llamada “Head”, una vez inicializado este índice apunta al espacio de memoria donde está almacenado el dato más reciente. Además se proveen dos funciones auxiliares encargadas de introducir y leer elementos del buffer respecto a la posición de la variable Head. 
+        Para el \textit{almacenamiento de la señal} se ha implementado un buffer circular empleando una estructura que contiene un array de tipo int32 de 1024 posiciones y una variable para indicar el índice 0 relativo llamada “Head”, una vez inicializado este índice apunta al espacio de memoria donde está almacenado el dato más reciente. Además se proveen dos funciones auxiliares encargadas de introducir y leer elementos del buffer respecto a la posición de la variable Head. 
         
         La función encargada de introducir nuevas muestras modifica el Head del buffer para mantener el estado actualizado, su funcionamiento se explica en el diagrama \ref{fig:bufferDiagramAppend}. 
     
@@ -65,6 +66,11 @@
         En el extracto \ref{code:interface} puede observarse de forma compacta la implementación del funcionamiento previamente descrito. 
         
         \code{Abstracto de la interfaz para el algoritmo del usuario.}{code/interface.cpp}{code:interface}{C++}
+        
+        A pesar de no ser estrictamente necesario si que resulta interesante \textit{implementar un algoritmo de detección} simplificado, pues en iteraciones posteriores será necesario para testear y además hace las pruebas en general más intuitivas. Para no añadir más complejidad de la necesaria se ha optado por un sencillo algoritmo que comprueba para cada muestra si se trata de un máximo local y si su valor está por encima de cierto umbral. Si se dan las dos condiciones entonces se asume que se trata de un pico R en la señal ECG, y por lo tanto, una pulsación. El código puede verse en el extracto \ref{code:BasicAlg}.
+        
+        \code{Algoritmo de detección de picos R sencillo}{code/BasicAlgorithm.c}{code:BasicAlg}{C++}
+        
 
         Para la tercera tarea se han decidido implementar varios mecanismos para mostrar los resultados al usuario. Se ha añadido una gráfica empleando el widget QwtPlot donde se muestra la señal ECG leída del fichero en tiempo real. Sobre ella se dibujan los picos R detectados por el algoritmo. Además se ofrece la posibilidad de dibujar el threshold de detección si el algoritmo emplea uno y un recuadro donde se muestra el valor de la tasa cardíaca instantánea medida. En la figura \ref{fig:resultsBasic} puede observarse el formato de salida.
 

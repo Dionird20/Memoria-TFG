@@ -2,18 +2,35 @@
 
 \chapterbeginx{Conclusiones y líneas futuras}
 
-Después de todo el desarrollo del proyecto, es pertinente hacer una
-valoración final del mismo, respecto a los resultados obtenidos, las
-expectativas o el resultado de la experiencia acumulada.
+\section{Conclusiones}
 
-Esta sección es indispensable y en ella se ha de reflejar, lo más
-claramente posible, las aportaciones del trabajo con unas conclusiones
-finales.
+Tras la finalización del proyecto, podemos decir con satisfacción que se han cumplido todos los objetivos que se plantearon al comienzo del desarrollo, tanto los referentes al sistema a desarrollar como los relacionados con el aprendizaje del autor de este TFG.
 
-Además, considerando también el estado de la técnica, se deben indicar
-las posibles líneas futuras de trabajo, proponer otros puntos de vista
-o cualquier otra sugerencia como postámbulo del presente trabajo, para
-ser considerada por el lector o el tribunal evaluador.
+\textit{Respecto al  sistema}, se ha obtenido un entorno de pruebas para testear algoritmos de medida de tasa cardiaca instantánea en un entrono portátil de tiempo real. El sistema resultante ha sido verificado en cada iteración de su desarrollo, y, tal y como se planeó, ha sido validado con un algoritmo sencillo de detección de tasa cardiaca usando algunos registros de la MIT-BIH.
 
+En primer lugar, se ha conseguido dotar a un sistema empotrado de las funcionalidades necesarias para que el usuario pueda cargar su propio algoritmo de detección de tasa cardíaca y se ha desarrollado una aplicación funcional, sobre el ordenador, capaz de enviar señales de ECG, extraídas de una base de datos, al algoritmo contenido en el sistema empotrado. En segundo lugar, se han desarrollado  mecanismos para testear el algoritmo, tanto desde el punto de vista de su fiabilidad como de su rendimiento. En el primer caso, contrastando los resultados obtenidos por dicho algoritmo con las anotaciones realizadas por un profesional especializado, y en el segundo, midiendo la duración de su ejecución y la memoria libre de la tarea que lo encapsula. 
+
+Por tanto, se han cumplido todos los requisitos prioritarios que se plantearon para el entorno de pruebas al comienzo del desarrollo, así como algunos de menor prioridad pero de gran relevancia. 
+
+Sin embargo, dos de los requisitos no prioritarios no han llegado a realizarse, principalmente por motivos temporales, ya que se ha entendido que carecían de la suficiente relevancia como para dilatar la realización del proyecto.Ambos requisitos se mencionarán más adelante como posibles líneas futuras de trabajo a seguir. A cambio, en el transcurso del desarrollo se ha visto la necesidad de implementar nuevos requisitos respecto a los planeados relacionados básicamente con la mejora de la usabilidad (iteración 1) y de la medida del rendimiento (iteración 2). 
+
+Se debe mencionar también un requisito que no se contempló inicialmente y que se ha mencionado poco durante el desarrollo: la implementación de un mecanismo de control de errores. Si bien el sistema no es muy dado a tener fallos críticos por su naturaleza específica, si sucediera, el usuario tendría poca información para averiguar cual ha sido el problema que lo originó.
+ 
+El proyecto ha seguido tanto la metodología de trabajo como las consideraciones de diseño que se plantearon en su inicio. Respecto a la metodología.... Respecto a las consideraciones de diseño, se ha intentado hacer un diseño usable del interfaz y diseño mantenible del código, dedicándose la última iteración a mejorar algunos aspectos de ambas, aunque, de nuevo con la limitaciones de tiempo propias de un TFG. 
+
+\textit{Respecto a los objetivos de aprendizaje del autor de este TFG}, se han conseguido alcanzar en gran medida los que se plantearon al comienzo del trabajo. Se ha empleado un sistema operativo de tiempo real en el microcontrolador y se ha usado QT para realizar un diseño de interfaz para el panel de usuario, profundizando así en el uso de algunos conceptos aprendidos en el grado. También, se ha elaborado este documento empleando \LaTeX, cumpliendo así el objetivo de tomar contacto con dicha herramienta y aprender a manejarla.
+
+
+\section{Lineas futuras}
+
+Como se comentaba en el apartado de conclusiones algunos requisitos no se han podido llevar a cabo. 
+
+De entre todos ellos, el control de errores es el más relevante y el que más se echa en falta. Sin duda con más tiempo, esta sería la funcionalidad más importante a añadir a continuación, pues mejora la robustez del sistema y la experiencia de usuario a partes iguales.
+
+Por otro lado, modificar la resolución de las muestras con las que trabaja el microcontrolador, es uno de los requisito que no ha sido llevado a cabo, que hubiera aportado la posibilidad de cubrir un rango mayor de la señal a procesar simultáneamente.
+
+Simular la entrada de datos por el ADC del microcontroladores otro de los requisitos no implementado,  ya que no incluirlo no varía los resultados ni le resta validez al método implementado, pero que sí podía aportar más realismo al sistema, a la vez que sería el primer paso para convertir el sistema desarrollado en un simulador de eventos cardiacos.
+
+Otra cuestión importante en la que se debería invertir más tiempo de desarrollo es en la interfaz de usuario del panel. Tratando de mejorar su diseño en términos de usabilidad, ordenando y bloqueando los elementos para mejorar la navegación. Ayudando así a que la aplicación dependiese menos de su manual de usuario y haciendo más satisfactorio su uso. Por supuesto, habría que considerar el diseño e implementación de pruebas de usuario que validaran este futuro diseño del interfaz.
 
 \chapterend

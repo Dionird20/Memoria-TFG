@@ -20,29 +20,29 @@
         Los requisitos a realizar en esta iteración son el 1.1, el 2.2 y el 2.1 de la tabla de requisitos iniciales. (Tabla \ref{tab:Requisitos}) Estos requisitos dan lugar al siguiente desglose de tareas y subtareas:
 
         \begin{enumerate}
-                \item Introducir señales de pruebas.
+                \item Introducción de las señales de pruebas.
                 \begin{enumerate}
                         \item Lectura de un fichero de datos con muestras de ECG.
-                        \item Envío de las lecturas a la plataforma de testeo a la frecuencia original de muestreo.
-                        \item Interfaz de usuario básica para gestionar la lectura del fichero.
+                        \item Construcción de una interfaz de usuario básica para gestionar la lectura del fichero.
                 \end{enumerate}
-                \item Entrada de datos en tiempo real.
+                \item Envío de datos provenientes de la base de datos en tiempo real al dispositivo de pruebas.
                 \begin{enumerate}
-                        \item Buscar la manera de realizar el análisis de manera continuada sin dejar de recibir nuevos datos en el proceso.
-                \end{enumerate}
-                \item Protocolo de comunicación.
-                \begin{enumerate}
-                        \item Definir el protocolo de comunicación a emplear.
+                        \item Elección del mecanismo para realizar el análisis de manera continuada sin dejar de recibir nuevos datos en el proceso.
+                        \item Definición del Protocolo de comunicación.
                 \end{enumerate}
         \end{enumerate}
 
     \subsection{Desarrollo}
 
-        Como ya se mencionó en el capítulo de Introducción, existen diversas bases de datos fisiológicos, concretamente en este proyecto se usa la MIT-BIH Arrythmia Database \cite{MIT-BIH}, que contiene  muestras de ECG anotadas por especialistas en cardiología y cuyo uso está ampliamente extendido. Es posible acceder a sus datos a través del repositorio de Physionet \cite{phisionet}, y, haciendo uso de su propia API, descargar los datos directamente desde matlab. De este modo, con un simple script, es posible convertir cualquier muestra de datos procedente de dicho repositorio en un fichero de texto estandarizado para la entrada de datos del entorno de pruebas.
+        Para realizar la primera de las tareas, \textit{la lectura de un fichero de datos con muestras de ECG}, se debe recordar que, como ya se mencionó en el capítulo de Introducción, existen diversas bases de datos fisiológicos, concretamente en este proyecto se usa la MIT-BIH Arrythmia Database \cite{MIT-BIH}, que contiene  muestras de ECG anotadas por especialistas en cardiología y cuyo uso está ampliamente extendido. 
+        
+        En la figura (TODO: Referencia a la figura) se puede ver un segmento del registro 106  de la MIT-BIH Arrhythmia Database\cite{MIT-BIH}, tal como lo muestra uno de los visores que suministra Physionet\cite{phisionet}. Como se puede comprobar en la figura, cada registro contiene tanto los datos del ECG, recogidos de la derivación II y digitalizados a 360 Hz, como las anotaciones de los especialistas, en este caso \textbf{·} para los latidos normales y \textbf{V} para los ventriculares.
+        
+        Es posible acceder a estos datos a través del repositorio de Physionet \cite{phisionet}, y, haciendo uso de su propia API, descargar los datos directamente desde matlab. De este modo, con un simple script (extracto \ref{code:sampleAsText}), es posible convertir cualquier muestra de datos procedente de dicho repositorio en un fichero de texto estandarizado para la entrada de datos del entorno de pruebas. De momento se va a extraer solamente los datos de la señal ECG, pero posteriormente será necesario extraer las anotaciones para evaluar la fidelidad.
         
          \code{Función de Matlab para extraer los datos del repositorio y formatearlos como texto.}{code/MatlabFirst.m}{code:sampleAsText}{Octave}
 
-        El siguiente paso consiste en leer dichos ficheros de texto desde el panel de usuario y preparar los datos para enviarlos al dispositivo de pruebas. Este proceso tiene dos puntos claves, la lectura debe ser periódica y su frecuencia debe ser igual que la frecuencia de muestreo de las muestras. Para lograr este cometido se ha desarrollado un script siguiendo la estructura del diagrama \ref{fig:SimpleFileRead}. 
+        El siguiente paso consiste en \textit{leer dichos ficheros de texto desde el panel de usuario} y preparar los datos para enviarlos al dispositivo de pruebas. Este proceso tiene dos puntos claves, la lectura debe ser periódica y su frecuencia debe ser igual que la frecuencia de muestreo usada para almacenar las muestras en la base de datos. Para lograr este cometido se ha desarrollado un script siguiendo la estructura del diagrama \ref{fig:SimpleFileRead}. 
 
         \begin{figure}[H]  
                 \centering
@@ -51,9 +51,9 @@
                 \label{fig:SimpleFileRead}
         \end{figure}
 
-        Para sincronizar las partes del script y garantizar la compatibilidad con futuras funcionalidades del panel de control se hace uso de los SLOT y las SIGNAL de Qt. Estos elementos son el pilar fundamental de las aplicaciones desarrolladas con Qt ya que actúan como canales de mensajes, permitiendo la sincronización de todas las funciones de la aplicación sin caer en fuertes restricciones por acoplamiento de las diferentes funcionalidades. El concepto es sencillo, cuando sucede un evento se emite una SIGNAL concreta para dicho evento, que además puede incluir datos como parámetros, y cualquier número de SLOTS que estén configurados para recibir dicha SIGNAL se ejecutan en paralelo. 
+        Para sincronizar las partes del script y garantizar la compatibilidad con futuras funcionalidades del panel de control se hace uso de los SLOT y las SIGNAL de Qt. Estos elementos son el pilar fundamental de las aplicaciones desarrolladas con Qt ya que actúan como canales de mensajes, permitiendo la sincronización de todas las funciones de la aplicación sin caer en fuertes restricciones por acoplamiento de las diferentes funcionalidades. El concepto es sencillo, cuando sucede un evento se emite una SIGNAL concreta para dicho evento, que además puede incluir datos como parámetros, y cualquier número de SLOTS que estén configurados para recibir dicha SIGNAL se ejecutan. 
 
-        Como se puede ver en el diagrama \ref{fig:CompleteFileRead} se han añadido también diferentes entradas para que el usuario interaccione. Estas son una rueda selectora para configurar la frecuencia de forma manual, un botón para realizar la lectura de la frecuencia de muestreo directamente desde el fichero y un tercero que daría comienzo a la prueba. En la figura \ref{fig:frecKnob} se puede ver la disposición de estos elementos en el panel.
+        Respecto al \textit{interfaz de usuario}, como se puede ver en el diagrama \ref{fig:CompleteFileRead}, se han añadido también diferentes entradas para que el usuario interaccione. Estas son una rueda selectora para configurar la frecuencia de forma manual, un botón para realizar la lectura de la frecuencia de muestreo directamente desde el fichero y un tercero que daría comienzo a la prueba. En la figura \ref{fig:frecKnob} se puede ver la disposición de estos elementos en el panel.
 
         \begin{figure} [H] 
                 \centering
@@ -62,7 +62,7 @@
                 \label{fig:CompleteFileRead}
         \end{figure}
 
-        Antes de continuar con la implementación del envío de los datos, es necesario detenerse en la gestión del tiempo real y el sincronismo dentro del dispositivo de pruebas, concretamente la Tiva (TM4C123GXL). Para esta finalidad se ha hecho uso de un sistema operativo de tiempo real de software libre llamado FREERTOS (TODO: Cita). Gracias a él se pueden gestionar y sincronizar tareas asignándoles diferentes prioridades, solucionando el problema de tener que gestionar las comunicaciones a la vez que se realizan las pruebas de rendimiento, ganando en el proceso además total independencia entre las tareas reduciendo acoplamientos.
+        Antes de continuar con la \textit{implementación del envío de los datos}, es necesario detenerse en la gestión del tiempo real y el sincronismo dentro del dispositivo de pruebas, concretamente la Tiva (TM4C123GXL). Para esta finalidad se ha hecho uso de un sistema operativo de tiempo real de software libre llamado FREERTOS (TODO: Cita). Gracias a él se pueden gestionar y sincronizar tareas asignándoles diferentes prioridades, solucionando el problema de tener que gestionar las comunicaciones a la vez que se realizan las pruebas de rendimiento, ganando en el proceso además total independencia entre las tareas reduciendo acoplamientos.
         
         \begin{figure}[H]
                 \centering
@@ -88,7 +88,7 @@
 
     \subsection{Pruebas}
 
-        Para testear la lectura de ficheros en Qt se han implementado una serie de tests unitarios con el objetivo de verificar las lecturas correctas, pero además, de verificar que ante entradas de datos erróneas como ficheros mal formateados el sistema reacciona de forma correcta.
+        Para testear la lectura de ficheros en Qt se han implementado una serie de tests unitarios con el objetivo de verificar las lecturas correctas, y, también, de verificar que, ante entradas de datos erróneas, como ficheros mal formateados, el sistema reacciona de forma correcta.
 
         Los casos sometidos a test han sido:
 
@@ -109,6 +109,8 @@
     \subsection{Conclusiones}
 
         Tras la realización de esta iteración quedan sentadas las bases para el correcto desarrollo del proyecto. A su vez se hizo presente la necesidad de implementar una nueva funcionalidad.
+
+        Nuevos requisitos:
 
         La inclusión de un mecanismo para que el usuario pueda seleccionar de manera fácil e intuitiva la muestra de señal que desea emplear para las pruebas. Esta funcionalidad ha sido incluida en la tabla de requisitos finales con el código 1.5. de la sección de conclusiones finales. (TODO: Referencia a la tabla final)
 
