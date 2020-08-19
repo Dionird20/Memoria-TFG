@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Documento LaTeX 																						%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Título:		Apéndice A
+% Autor:  	Ignacio Moreno Doblas
+% Fecha:  	2014-02-01, actualizado 2019-11-11
+% Versión:	0.5.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{fancy}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{Apéndice} %
+\fancyhead[LO]{\nouppercase{\rightmark}}
+
+\chapter{Anexos}
+
+\minitoc
+
+\section{Tests Unitarios}
+
+\subsection{Descripción}
+
+El concepto test unitario hace referencia a una serie de pruebas realizadas sobre un único componente del sistema. La finalidad de esto es asegurar que cada componente cumple con sus funciones de la forma esperada. Generalmente cada componente, o unidad, solo posee unas pocas entradas y una única salida y el test consiste en verificar todos los casos posibles con diferentes entradas fijas que poseen respuestas conocidas.
+
+Implementando las pruebas de esta forma se consigue facilitar la tarea de mantener el código durante el desarrollo, ya que si alguna vez se modifica la lógica de alguna unidad, se vuelven a ejecutar los tests unitarios para comprobar si el componente sigue funcionando según lo esperado, evitando tener que realizar pruebas nuevas cada vez que se modifica un componente.
+
+Además ofrece otros beneficios como la modularidad del código, agiliza el desarrollo a largo plazo, el código se vuelve más sencillo de debugear y evita que los bugs se propaguen a fases más avanzadas del desarrollo.
+
+\subsection{Implementación en QT}
+
+El framework de QT posee las herramientas necesarias para realizar pruebas unitarias de forma nativa. Sin embargo es necesario realizar ciertos pasos previos para preparar el proyecto y tener en cuenta ciertas consideraciones.
+
+\subsubsection{Configurar el proyecto de QT}
+
+Primeramente es necesario crear un proyecto de QT multicarpeta, ya que los tests se implementan en un proyecto separado de la aplicación principal, este proyecto será llamado de ahora en adelante como el proyecto raíz.
+
+Para esto es necesario crear un directorio y generar a mano el ``projectName.pro'' del proyecto fijando el valor del campo ``TEMPLATE'' a subdirs. Dado que los proyectos de QT son carpetas, hay que añadir los subdirectorios al fichero quedando de forma similar al extracto (TODO: Referencia del .pro). 
+
+(Extracto del .pro)
+
+En caso de poseer ya un proyecto previo, se puede introducir dentro del proyecto raíz simplemente copiando la carpeta en el interior, asegurando que coincide con el subdirectorio que se ha configurado.
+
+\subsubsection{Crear los proyectos de test}
+
+El proceso para generar los proyectos de test es simple gracias a las herramientas que ofrece QT creator.
+
+Abriendo el proyecto raíz con la aplicación QT creator, hay que generar un subproyecto. Para ello la forma más directa es hacer click derecho sobre el proyecto raíz y seleccionar en el menú la opción ``New subproject''. En la ventana emergente se selecciona ``Other Project/Auto Test Project''.
+
+Ahora solo es necesario seguir los pasos indicados rellenando los campos necesarios. los campos que no se mencionan a continuación no es necesario modificarlos.
+
+\begin{itemize}
+    \item Name: Nombre del proyecto, generalmente es buena práctica empezar por ``tst''.
+    \item Test case name: El nombre del caso a testear, generalmente el componente, la recomendación es emplear un subproyecto por cada componente.
+    \item Marcar la casilla Generate initialization and cleanup code.
+    \item Seleccionar los kits necesarios, generalmente los mismos que use el proyecto principal.
+\end{itemize}
+
+Este proceso habrá generado un nuevo proyecto (Y su carpeta) y habrá introducido el subdirectorio directamente en el ``.pro'' del proyecto raíz. Para evitar que los proyectos de test se incluyan en el proceso de compilación del modo release se puede añadir el comando ``CONFIG(debug, debug|release)'', quedando finalmente el fichero de forma similar al extracto (TODO: Extracto fichero .pro con subdirs de test)
+
+\subsubsection{Configurar los proyectos de test}
+
+
+
+
+
+\chapterend
