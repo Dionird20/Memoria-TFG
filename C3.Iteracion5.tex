@@ -26,15 +26,30 @@
         \end{enumerate}
     \subsection{Desarrollo}
     
-        Para la primera tarea, \textit{revisar la limpieza del código y su coherencia}, se recorren los diferentes ficheros del código examinando con detalle el estilo de escritura utilizado, para estandarizar todo el código. Aunque no se ha comentado previamente en el proyecto, existen convenciones a la hora de escribir código que se han seguido durante el desarrollo, sin embargo en esta iteración se ha decidido asegurar el cumplimiento de éstas revisando todo lo desarrollado, empezando por la coherencia de la nomenclatura, se han empleado tres convenciones de estilo para diferenciar los diferentes elementos del código: la primera,  ``lowerCamelCase'' para las variables, ya sean públicas o privadas, y para los tipos, acompañado de ``\char`_t''; en segundo lugar, ``UpperCamelCase'' para las funciones; por último,  ``SCREAMING\char`_SNAKE\char`_CASE'' para la declaración de constantes.
-        
-        Además debe asegurarse de que todo el código y comentarios mantengan una coherencia en cuanto al idioma utilizado. El idioma escogido para este proyecto es el inglés, ya que es el idioma dominante dentro del sector, por ello a la vez que se ha repasado el estilo de escritura, si se ha detectado algún comentario o elemento en otro idioma, se ha sustituido.
+        Para la primera tarea, \textit{revisar la limpieza del código y su coherencia}, se recorren los diferentes ficheros del código examinando con detalle el estilo de escritura utilizado, garantizando un código estandarizado y que satisfaga las consideraciones de diseño establecidas al comienzo del desarrollo.
         
        \textit{Comentarios explicativos} se han añadido a las declaraciones y demás elementos del código con el objetivo de facilitar la comprensión del mismo, especialmente en las zonas destinadas a ser modificadas por el usuario final. Además se han añadido comentarios referidos a posibles mejoras y correcciones que se podrían implementar en un futuro, por si el sistema sigue desarrollándose una vez concluido este proyecto. Minimizando así el tiempo de estudio previo a comenzar a realizar modificaciones.
        
-       Para \textit{mejorar el apartado visual del panel} se han redistribuido los elementos ya expuestos en este proyecto agrupándolos por secciones. Para \textit{mejorar la usabilidad} se han incluido textos descriptivos detallando a que corresponde cada elemento y una nueva funcionalidad que permite detener el envío de una señal para realizar el análisis de otra sin la necesidad de reiniciar el panel. La nueva disposición de los elementos puede observarse en las imagenes (TODO: las dos referencias)
+       Para \textit{mejorar el apartado visual del panel} se han redistribuido los elementos ya expuestos en este proyecto, agrupándolos por secciones. Para \textit{mejorar la usabilidad} se han incluido textos descriptivos detallando a que corresponde cada elemento del panel y una nueva funcionalidad que permite detener el envío de una señal para realizar el análisis de otra sin la necesidad de reiniciar el panel. La nueva disposición de los elementos puede observarse en las imágenes \ref{fig:EndConfig} y \ref{fig:EndResults}.
        
-       (TODO: Las dos imagenes)
+       \begin{figure}[H]
+            \centering
+                    \includegraphics[width = \linewidth]{figuras/Config.PNG}
+            \caption{Panel de usuario, configuración de la prueba.}
+            \label{fig:EndConfig}
+        \end{figure}
+        
+        \begin{figure}[H]
+            \centering
+                    \includegraphics[width = \linewidth]{figuras/Results.PNG}
+            \caption{Panel de usuario, resultados de la prueba.}
+            \label{fig:EndResults}
+        \end{figure}
        
     \subsection{Pruebas}
+    
+    En esta iteración la única funcionalidad implementada susceptible de contener errores es la gestión del estado, necesaria para permitir al usuario detener y comenzar pruebas con diferentes muestras sin la necesidad de cerrar la sesión. Dado el carácter integral de esta funcionalidad resulta muy complicado realizar test unitarios, por lo que el método de prueba empleado ha sido simplemente un debug intensivo probando exhaustivamente los casos posibles.
+    
     \subsection{Conclusiones}
+    
+    Con esta iteración queda finalizado el desarrollo de este proyecto. El estado actual del sistema es estable, funcional y medianamente usable por lo que se pueden dar por finalizados todos los requisitos de alta prioridad establecidos al inicio del proyecto. Si bien hay aspectos del sistema que pueden ser mejorados y elementos que pueden añadirse, están fuera del alcance de este proyecto, aunque se hablará sobre ellos en las conclusiones generales del proyecto en un apartado posterior.
