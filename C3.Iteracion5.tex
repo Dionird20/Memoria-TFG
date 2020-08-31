@@ -24,6 +24,8 @@
             \item Añadir comentarios necesarios para facilitar la lectura del código y su mantenimiento.
             \item Mejorar la apariencia visual del panel y mejorar su usabilidad en la medida de lo posible.
         \end{enumerate}
+        
+        Además se aprovecha esta iteración de carácter finalizador para mejorar un apartado previamente desarrollado, la estimación del porcentaje de uso de la CPU.
     \subsection{Desarrollo}
     
         Para la primera tarea, \textit{revisar la limpieza del código y su coherencia}, se recorren los diferentes ficheros del código examinando con detalle el estilo de escritura utilizado, garantizando un código estandarizado y que satisfaga las consideraciones de diseño establecidas al comienzo del desarrollo.
@@ -31,8 +33,20 @@
        \textit{Comentarios explicativos} se han añadido a las declaraciones y demás elementos del código con el objetivo de facilitar la comprensión del mismo, especialmente en las zonas destinadas a ser modificadas por el usuario final. Además se han añadido comentarios referidos a posibles mejoras y correcciones que se podrían implementar en un futuro, por si el sistema sigue desarrollándose una vez concluido este proyecto. Minimizando así el tiempo de estudio previo a comenzar a realizar modificaciones.
        
        Para \textit{mejorar el apartado visual del panel} se han redistribuido los elementos ya expuestos en este proyecto, agrupándolos por secciones. Para \textit{mejorar la usabilidad} se han incluido textos descriptivos detallando a que corresponde cada elemento del panel y una nueva funcionalidad que permite detener el envío de una señal para realizar el análisis de otra sin la necesidad de reiniciar el panel. La nueva disposición de los elementos puede observarse en las imágenes \ref{fig:EndConfig} y \ref{fig:EndResults}.
-       
-       \begin{figure}[H]
+        
+        Con respecto al cálculo de uso de CPU, se ha decidido tomar un nuevo enfoque dado que las herramientas de medición del propio sistema operativo han demostrado ser muy ineficientes. Tanto en términos de rendimiento, ya que bloquean las interrupciones del procesador mientras se ejecutan, como en utilidad, ya que dadas sus limitaciones resultan poco precisas.
+        
+        Por estos dos motivos se ha decidido optar por calcular el uso de CPU de forma matemática, y aunque se trate de una aproximación en lugar de una medida, ya ha sido expuesta la inexactitud y la variabilidad de la medida realizada por el sistema, además se consigue quitar esa carga del procesador. 
+        
+        Para la estimación, la formula empleada ha sido:
+        
+        \begin{align*}
+            \%CPU = \frac{f_{signal}*t_{algoritm}}{n_{samples} * F_{processor}} * 100
+        \end{align*}
+        
+         Donde: \( f_{\mathrm{signal}}\) es la frecuencia a la que se envían las muestras de la señal, típicamente la frecuencia de muestreo a la que se tomó; \( t_{\mathrm{algorithm}}\) representa el número de operaciones o ``Ticks'' que emplea el algoritmo en ejecutarse, medido previamente en la tercera iteración; \( n_{\mathrm{samples}}\) el numero de muestras que se reciben antes de ejecutar el algoritmo, viene impuesto por el código y por defecto es ocho; Finalmente  \( F_{\mathrm{processor}}\) representa la frecuencia de trabajo del procesador, que indica el número de operaciones por segundo que este puede realizar.
+         
+          \begin{figure}[H]
             \centering
                     \includegraphics[width = \linewidth]{figuras/Config.PNG}
             \caption{Panel de usuario, configuración de la prueba.}
@@ -45,7 +59,8 @@
             \caption{Panel de usuario, resultados de la prueba.}
             \label{fig:EndResults}
         \end{figure}
-       
+        
+    \clearpage
     \subsection{Pruebas}
     
     En esta iteración la única funcionalidad implementada susceptible de contener errores es la gestión del estado, necesaria para permitir al usuario detener y comenzar pruebas con diferentes muestras sin la necesidad de cerrar la sesión. Dado el carácter integral de esta funcionalidad resulta muy complicado realizar test unitarios, por lo que el método de prueba empleado ha sido simplemente un debug intensivo probando exhaustivamente los casos posibles.

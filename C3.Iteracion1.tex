@@ -36,7 +36,14 @@
 
         Para realizar la primera de las tareas, \textit{la lectura de un fichero de datos con muestras de ECG}, se debe recordar que, como ya se mencionó en el capítulo de Introducción, existen diversas bases de datos fisiológicos, concretamente en este proyecto se usa la MIT-BIH Arrythmia Database \cite{MIT-BIH}, que contiene  muestras de ECG anotadas por especialistas en cardiología y cuyo uso está ampliamente extendido. 
         
-        En la figura (TODO: Referencia a la figura) se puede ver un segmento del registro 106  de la MIT-BIH Arrhythmia Database\cite{MIT-BIH}, tal como lo muestra uno de los visores que suministra Physionet\cite{phisionet}. Como se puede comprobar en la figura, cada registro contiene tanto los datos del ECG, recogidos de la derivación II y digitalizados a 360 Hz, como las anotaciones de los especialistas, en este caso \textbf{·} para los latidos normales y \textbf{V} para los ventriculares.
+        En la figura \ref{fig:106} se puede ver un segmento del registro 106 de la MIT-BIH Arrhythmia Database\cite{MIT-BIH}, tal como lo muestra uno de los visores que suministra Physionet\cite{phisionet}. Como se puede comprobar en la figura, cada registro contiene tanto los datos del ECG, recogidos de la derivación II y digitalizados a 360 Hz, como las anotaciones de los especialistas, en este caso \textbf{·} para los latidos normales y \textbf{V} para los ventriculares.
+        
+        \begin{figure}[H]  
+                \centering
+                        \includegraphics[width =\linewidth]{figuras/MITBIH106.png}
+                \caption{Segmento del registro 106 desde 1:30 hasta 1:40.}
+                \label{fig:106}
+        \end{figure}
         
         Es posible acceder a estos datos a través del repositorio de Physionet \cite{phisionet}, y, haciendo uso de su propia API, descargar los datos directamente desde matlab. De este modo, con un simple script (extracto \ref{code:sampleAsText}), es posible convertir cualquier muestra de datos procedente de dicho repositorio en un fichero de texto estandarizado para la entrada de datos del entorno de pruebas. De momento se va a extraer solamente los datos de la señal ECG, pero posteriormente será necesario extraer las anotaciones para evaluar la fidelidad.
         
@@ -62,7 +69,7 @@
                 \label{fig:CompleteFileRead}
         \end{figure}
 
-        Antes de continuar con la \textit{implementación del envío de los datos}, es necesario detenerse en la gestión del tiempo real y el sincronismo dentro del dispositivo de pruebas, concretamente la Tiva (TM4C123GXL). Para esta finalidad se ha hecho uso de un sistema operativo de tiempo real de software libre llamado FREERTOS (TODO: Cita). Gracias a él se pueden gestionar y sincronizar tareas asignándoles diferentes prioridades, solucionando el problema de tener que gestionar las comunicaciones a la vez que se realizan las pruebas de rendimiento, ganando en el proceso además total independencia entre las tareas reduciendo acoplamientos.
+        Antes de continuar con la \textit{implementación del envío de los datos}, es necesario detenerse en la gestión del tiempo real y el sincronismo dentro del dispositivo de pruebas, concretamente la Tiva (TM4C123GXL). Para esta finalidad se ha hecho uso de un sistema operativo de tiempo real de software libre llamado FREERTOS \cite{FreeRTOS}. Gracias a él se pueden gestionar y sincronizar tareas asignándoles diferentes prioridades, solucionando el problema de tener que gestionar las comunicaciones a la vez que se realizan las pruebas de rendimiento, ganando en el proceso además total independencia entre las tareas reduciendo acoplamientos.
         
         \begin{figure}[H]
                 \centering
@@ -101,10 +108,7 @@
 
         Para el protocolo el proceso ha sido similar, si es capaces de codificar y decodificar un mensaje, donde entre en juego la necesidad de emplear el bit Stuffing, entonces debe ser capaz de codificar y decodificar cualquier mensaje.
 
-        Para comprobar la transmisión de los datos entre el panel y el dispositivo de prueba se ha optado por un test de carácter más empírico. Si se puede enviar en tiempo real y recibir de vuelta la señal deseada sin que los datos se distorsionen, se puede concluir que el sistema de transmisión funciona correctamente.
-
-        (TODO: Imagen de los dos ECG)
-
+        Para comprobar la transmisión de los datos entre el panel y el dispositivo de prueba se ha optado por un test de carácter más empírico. Si se puede enviar en tiempo real y recibir de vuelta la señal deseada sin que los datos se distorsionen, se puede concluir que el sistema de transmisión funciona correctamente. Esto se ha comprobado empleando el inspector de variables en modo debug de ambos entornos, observando que los valores eran equivalentes.
 
     \subsection{Conclusiones}
 
@@ -112,7 +116,7 @@
 
         Nuevos requisitos:
 
-        La inclusión de un mecanismo para que el usuario pueda seleccionar de manera fácil e intuitiva la muestra de señal que desea emplear para las pruebas. Esta funcionalidad ha sido incluida en la tabla de requisitos finales con el código 1.5. de la sección de conclusiones finales. (TODO: Referencia a la tabla final)
+        La inclusión de un mecanismo para que el usuario pueda seleccionar de manera fácil e intuitiva la muestra de señal que desea emplear para las pruebas. Esta funcionalidad ha sido incluida en la tabla de requisitos finales con el código 1.5. de la sección de conclusiones finales \ref{tab:RequisitosFinales}.
 
-        De la realización de los test también se observó la necesidad de incluir algún tipo de mecanismo de mensajes para notificar a los usuarios los errores o advertencias que se produzcan en el panel de control. Esta funcionalidad se ha incluido en la tabla de requisitos finales con el código 1.6. de la sección de conclusiones finales (TODO: Referencia a la tabla)
+        De la realización de los test también se observó la necesidad de incluir algún tipo de mecanismo de mensajes para notificar a los usuarios los errores o advertencias que se produzcan en el panel de control. Esta funcionalidad se ha incluido en la tabla de requisitos finales con el código 1.6. de la sección de conclusiones finales \ref{tab:RequisitosFinales}. 
         
