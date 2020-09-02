@@ -1,0 +1,75 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Documento LaTeX 																						%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Título:		Apéndice A
+% Autor:  	Ignacio Moreno Doblas
+% Fecha:  	2014-02-01, actualizado 2019-11-11
+% Versión:	0.5.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{fancy}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{Apéndice} %
+\fancyhead[LO]{\nouppercase{\rightmark}}
+
+\chapter{Horas de desarrollo}
+
+\minitoc
+\section{Total}
+
+Para el desarrollo de este proyecto se han empleado un total aproximado de \textbf{303 horas}, repartidas entre el desarrollo del sistema, las sesiones de control y la redacción del documento.
+
+\section{Desglose}
+
+A continuación se presenta un desglose de las horas empleadas durante el desarrollo del proyecto.
+En el tiempo asignado a cada tarea va incluido el tiempo invertido en el documento correspondiente a dicha tarea.
+
+\begin{itemize}
+    \item \textbf{Estudio previo e introducción:} 40 horas.
+    \item \textbf{Especificaciones:} 18 horas.
+    \item \textbf{Iteración inicial:} 12 horas.
+    \item \textbf{Primera iteración:} 30 horas.
+    \begin{itemize}
+        \item Introducción de las señales de prueba: 10 horas.
+        \item Envío de datos provenientes de la base de datos en tiempo real al dispositivo de pruebas: 12 horas. 
+        \item Pruebas: 8 horas.
+    \end{itemize}
+    \item \textbf{Segunda iteración:} 35 horas.
+    \begin{itemize}
+        \item Implementar un mecanismo por el que seleccionar el fichero de entrada: 10 horas.
+        \item Implementar la interfaz para los algoritmos de detección: 9 horas. 
+        \item Mostrar los resultados del análisis en el panel de usuario: 6 horas.
+        \item Pruebas: 10 horas.
+    \end{itemize}
+    \item \textbf{Tercera iteración:} 34 horas.
+    \begin{itemize}
+        \item Aislamiento del procesado de señales en una tarea exclusiva.: 5 horas.
+        \item Extraer las medidas de rendimiento del sistema operativo: 16 horas. 
+        \item Mostrar dichas medidas en el panel de usuario de QT: 5 horas.
+        \item Pruebas: 8 horas.
+    \end{itemize}
+    \item \textbf{Cuarta iteración:} 74 horas.
+    \begin{itemize}
+        \item Estudio de la norma Une-en 60601-2-47:2002: 6 horas.
+        \item Extraer las anotaciones de la base de datos y añadirlas al fichero de entra-da: 5 horas. 
+        \item Preparar el dispositivo de pruebas para transmitir anotaciones junto a la detección de los latidos: 3 hora.
+        \item Modificar el algoritmo de detección implementado en la segunda iteración para enviar anotaciones: 5 hora.
+        \item  Crear un modelo de almacenamiento para las anotaciones que facilite la implementación de la norma: 16 horas.
+        \item Implementar el control de las anotaciones en el panel de usuario: 12 horas.
+        \item Implementar las ecuaciones de cálculo de fiabilidad descritas en la norma: 6 horas.
+        \item Mostrar al usuario los resultados de la validación del algoritmo: 5 horas.
+        \item Pruebas: 16 horas.
+    \end{itemize}
+    \item \textbf{Quinta iteración:} 30
+    \begin{itemize}
+        \item Limpieza de código y asegurar coherencia en la nomenclatura: 8 horas.
+        \item Añadir comentarios necesarios para facilitar la lectura del código y su mantenimiento: 8 horas. 
+        \item  Mejorar la apariencia visual del panel y mejorar su usabilidad en la medida de lo posible: 8 horas.
+        \item Estimación matemática del porcentaje de uso de la CPU: 2 horas.
+        \item Pruebas: 4 horas.
+    \end{itemize}
+    \item \textbf{Repaso y revisión del documento:} 16 horas
+    \item \textbf{Reuniones y sesiones de control:} 14 horas
+\end{itemize}
+
+\chapterend

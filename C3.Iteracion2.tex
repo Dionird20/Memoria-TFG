@@ -21,7 +21,7 @@
             \item Implementar un mecanismo por el que seleccionar el fichero de entrada.
             \item Implementar la interfaz para los algoritmos de detección.
             \begin{enumerate}
-                \item Almacenar la señal de entrada en un buffer.
+                \item Almacenar la señal de entrada en un \textit{buffer}.
                 \item Definir la interfaz
                 \item Implementar un algoritmo simple de detección.
             \end{enumerate}
@@ -30,7 +30,7 @@
         
     \subsection{Desarrollo}
         
-        La primera tarea, \textit{seleccionar la entrada de datos}, se ha resuelto mediante el empleo de un "QListView" \cite{QListView} al que se le ha configurado una carpeta raíz donde se colocarán todos los ficheros de datos junto con unos filtros para que solo muestre estos. Haciendo uso del SLOT \char`_clicked se puede obtener la ruta al fichero que clickea el usuario dentro del widget, permitiendo pasarla como parámetro a la función de lectura implementada en la anterior iteración. 
+        La primera tarea, \textit{seleccionar la entrada de datos}, se ha resuelto mediante el empleo de un \textit{QListView} \cite{QListView} al que se le ha configurado una carpeta raíz donde se colocarán todos los ficheros de datos junto con unos filtros para que solo muestre estos. Haciendo uso del \textit{SLOT \char`_clicked} se puede obtener la ruta al fichero que \textit{clickea} el usuario dentro del \textit{widget}, permitiendo pasarla como parámetro a la función de lectura implementada en la anterior iteración. 
         
         \begin{figure}[H] 
                 \centering
@@ -39,23 +39,23 @@
                 \label{fig:fileView}
         \end{figure}
         
-        Para el \textit{almacenamiento de la señal} se ha implementado un buffer circular empleando una estructura que contiene un array de tipo int32 de 1024 posiciones y una variable para indicar el índice 0 relativo llamada “Head”, una vez inicializado este índice apunta al espacio de memoria donde está almacenado el dato más reciente. Además se proveen dos funciones auxiliares encargadas de introducir y leer elementos del buffer respecto a la posición de la variable Head. 
+        Para el \textit{almacenamiento de la señal} se ha implementado un \textit{buffer} circular empleando una estructura que contiene un \textit{array} de tipo int32 de 1024 posiciones y una variable para indicar el índice 0 relativo llamada \textit{Head}, una vez inicializado este índice apunta al espacio de memoria donde está almacenado el dato más reciente. Además se proveen dos funciones auxiliares encargadas de introducir y leer elementos del \textit{buffer} respecto a la posición de la variable \textit{Head}. 
         
-        La función encargada de introducir nuevas muestras modifica el Head del buffer para mantener el estado actualizado, su funcionamiento se explica en el diagrama \ref{fig:bufferDiagramAppend}. 
+        La función encargada de introducir nuevas muestras modifica el \textit{Head} del \textit{buffer} para mantener el estado actualizado, su funcionamiento se explica en el diagrama \ref{fig:bufferDiagramAppend}. 
     
         \begin{figure}[H] 
                 \centering
                         \includegraphics[width = \linewidth]{figuras/bufferAppend.png}
-                \caption{Funcionamiento de \char`"AppendSample", función encargada de introducir muestras en el buffer.}
+                \caption{Funcionamiento de \textit{AppendSample}, función encargada de introducir muestras en el \textit{buffer}.}
                 \label{fig:bufferDiagramAppend}
         \end{figure}
         
-        La función encargada de extraer las muestras simplemente recorre el array de forma relativa a la posición del Head como si se tratara de un array normal, retirando del usuario la necesidad de controlar los límites de este. Su funcionamiento está explicado en el diagrama \ref{fig:bufferDiagramGet}.
+        La función encargada de extraer las muestras simplemente recorre el \textit{array} de forma relativa a la posición del \textit{Head} como si se tratara de un \textit{array} normal, retirando del usuario la necesidad de controlar los límites de este. Su funcionamiento está explicado en el diagrama \ref{fig:bufferDiagramGet}.
         
         \begin{figure}[H]
                 \centering
                         \includegraphics[width = 0.9 \linewidth]{figuras/bufferGet.png}
-                \caption{Funcionamiento de "GetSample", función en cargada de extraer las muestras del buffer.}
+                \caption{Funcionamiento de \textit{GetSample}, función en cargada de extraer las muestras del \textit{buffer}.}
                 \label{fig:bufferDiagramGet}
         \end{figure}
         
@@ -63,7 +63,7 @@
 
         La implementación se ha realizado mediante punteros a funciones. Se ha definido un tipo correspondiente a un puntero a una función con la firma establecida. De esta forma el usuario puede asignar al puntero cualquier función que desarrolle mientras satisfaga la firma impuesta por el mismo, haciendo las veces de interfaz.
         
-        En el extracto \ref{code:interface} puede observarse de forma compacta la implementación del funcionamiento previamente descrito. Como se observa la función espera como entrada un puntero al buffer circular y tiene como salida una estructura de tipo PARAMETERS\char`_ECG\char`_PROCESSED, que corresponde con el modelo que espera el panel de usuario en el paquete. Esta estructura contiene un array para almacenar la ubicación de los picos detectados, un array para almacenar los valores de esos picos, un parámetro opcional para incluir un threshold y otro parámetro para anotar la cantidad de picos detectados.
+        En el extracto \ref{code:interface} puede observarse de forma compacta la implementación del funcionamiento previamente descrito. Como se observa la función espera como entrada un puntero al \textit{buffer} circular y tiene como salida una estructura de tipo \textit{PARAMETERS\char`_ECG\char`_PROCESSED}, que corresponde con el modelo que espera el panel de usuario en el paquete. Esta estructura contiene un \textit{array} para almacenar la ubicación de los picos detectados, un \textit{array} para almacenar los valores de esos picos, un parámetro opcional para incluir un \textit{threshold} y otro parámetro para anotar la cantidad de picos detectados.
         
         \code{Abstracto de la interfaz para el algoritmo del usuario.}{code/interface.cpp}{code:interface}{C++}
         
@@ -72,7 +72,7 @@
         \code{Algoritmo de detección de picos R sencillo}{code/BasicAlgorithm.c}{code:BasicAlg}{C++}
         
 
-        Para la tercera tarea se han decidido implementar varios mecanismos para \textit{mostrar los resultados al usuario}. Se ha añadido una gráfica empleando el widget QwtPlot donde se muestra la señal ECG leída del fichero en tiempo real. Sobre ella se dibujan los picos R detectados por el algoritmo. Además se ofrece la posibilidad de dibujar el threshold de detección si el algoritmo emplea uno y un recuadro donde se muestra el valor de la tasa cardíaca instantánea medida. En la figura \ref{fig:resultsBasic} puede observarse el formato de salida.
+        Para la tercera tarea se han decidido implementar varios mecanismos para \textit{mostrar los resultados al usuario}. Se ha añadido una gráfica empleando el \textit{widget QwtPlot} donde se muestra la señal ECG leída del fichero en tiempo real. Sobre ella se dibujan los picos R detectados por el algoritmo. Además se ofrece la posibilidad de dibujar el \textit{threshold} de detección si el algoritmo emplea uno y un recuadro donde se muestra el valor de la tasa cardíaca instantánea medida. En la figura \ref{fig:resultsBasic} puede observarse el formato de salida.
 
         \begin{figure}[H]
                 \centering
@@ -93,22 +93,22 @@
         \end{figure}
 
         \clearpage
-        Como prueba para el buffer circular se han implementado dos tests unitarios en QT. Como la implementación del buffer es idéntica si este funciona correctamente en QT no es necesario testearlo en la TIVA. Los casos implementados son ``BufferStorage'' y ``BufferCircularity'': 
+        Como prueba para el \textit{buffer} circular se han implementado dos tests unitarios en Qt. Como la implementación del \textit{buffer} es idéntica si este funciona correctamente en Qt no es necesario testearlo en la TIVA. Los casos implementados son \textit{BufferStorage} y \textit{BufferCircularity}: 
         
         \begin{itemize}
-            \item El primero de ellos comprueba que los datos son almacenados y leídos correctamente, asignando al buffer valores conocidos y comprobando cada uno de ellos. 
-            \item La segunda prueba funciona de forma similar, solo que esta vez se han introducido en el buffer más elementos que su longitud total, esto debería sobre escribir los datos más antiguos. Al emplear unos datos de entrada sencillos, la sobre escritura es predecible, y por tanto, comprobable.
+            \item El primero de ellos comprueba que los datos son almacenados y leídos correctamente, asignando al \textit{buffer} valores conocidos y comprobando cada uno de ellos. 
+            \item La segunda prueba funciona de forma similar, solo que esta vez se han introducido en el \textit{buffer} más elementos que su longitud total, esto debería sobre escribir los datos más antiguos. Al emplear unos datos de entrada sencillos, la sobre escritura es predecible, y por tanto, comprobable.
         \end{itemize}
         
          El código de ambas pruebas puede ser comprobado en el extracto \ref{code:TestBuffer}.
 
-        Para testear la interfaz, o mejor dicho, el puntero a una función simplemente se ha ejecutado el código en modo debug y comprobado que en el momento apropiado este ejecutaba la función correctamente mediante un punto de ruptura. 
+        Para testear la interfaz, o mejor dicho, el puntero a una función simplemente se ha ejecutado el código en modo \textit{debug} y comprobado que en el momento apropiado este ejecutaba la función correctamente mediante un punto de ruptura. 
 
         El test correspondiente al envío de los resultados de vuelta al panel resulta ser más sencillo de lo que pueda parecer a priori. Pues el envío correcto de los datos no implica que los datos sean correctos, por lo que no es necesario tener de momento un algoritmo capaz de detectar eficazmente la tasa cardiaca. Comprobando mediante puntos de ruptura que el dato enviado y recibido son el mismo. 
         
-        Aprovechando que ya se dispone de una entrada de datos procedente del dispositivo, se puede probar también que la gráfica pinta correctamente los datos, para esto solo hay que asegurar que los datos de entrada son almacenados bien en el buffer de la gráfica empleando algunos puntos de ruptura y el inspector de variables del modo debug. El proceso de pintado en sí mismo es llevado acabo con una librería de QT por lo que no necesita de prueba.
+        Aprovechando que ya se dispone de una entrada de datos procedente del dispositivo, se puede probar también que la gráfica presente correctamente los datos, para esto solo hay que asegurar que los datos de entrada son almacenados bien en el \textit{buffer} de la gráfica empleando algunos puntos de ruptura y el inspector de variables del modo \textit{debug}. El proceso de representación gráfica en sí mismo es llevado acabo con una librería de Qt por lo que no necesita de prueba.
         
-        \code{Código de los tests unitarios del buffer circular}{code/TestBuffer.c}{code:TestBuffer}{C++}
+        \code{Código de los tests unitarios del \textit{buffer} circular}{code/TestBuffer.c}{code:TestBuffer}{C++}
 
         
     \subsection{Conclusiones}

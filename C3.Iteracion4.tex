@@ -20,7 +20,7 @@
         \begin{enumerate}
             \item Estudio de la norma \cite{Aenor2002}.
             \item Extraer las anotaciones de la base de datos y añadirlas al fichero de entrada.
-            \item Preparar el dispositivo de pruebas para transmitir anotaciones junto a la deteccion de los latidos.
+            \item Preparar el dispositivo de pruebas para transmitir anotaciones junto a la detección de los latidos.
             \item Modificar el algoritmo de detección implementado en la segunda iteración para enviar anotaciones.
             \item Crear un modelo de almacenamiento para las anotaciones que facilite la implementación de la norma. \cite{Aenor2002}
             \item Implementar el control de las anotaciones en el panel de usuario.
@@ -31,8 +31,7 @@
     
     \subsection{Desarrollo}
     
-    %Aunque pueda parecer simple, medir la eficiencia de un algoritmo de detección QRS no es sencillo y varía en gran medida en función de los distintos tipos de latidos que se quieran detectar con el algoritmo. En las bases de datos hay numerosos tipos de anotaciones con una amplia variedad de significados, además, es posible que distintas bases de datos empleen diferentes anotaciones para referirse al mismo evento cardíaco.
-    
+ 
     La norma propone un mecanismo para cuantificar la fiabilidad de un algoritmo de detección de arritmias cardiacas en general, y, básicamente, propone comparar las clasificaciones de los latidos hechas por el algoritmo bajo prueba con las anotaciones contenidas en bases de datos estándar, como la MIT-BIH. 
     
     Así, propone rellenar una tabla como la que aparece en la figura \ref{fig:fiability}, que cruza las anotaciones del algoritmo (minúscula) con las anotaciones de la base de datos (mayúsculas). La nomenclatura que propone la norma para estas anotaciones es: 
@@ -46,21 +45,21 @@
      
     Un algoritmo con un 100\% de fiabilidad tendría solamente rellena la diagonal de la tabla. El fabricante debe incluir esta tabla en la documentación de su dispositivo.
     
-    También, e íntimamente relacionado con la tabla, la norma obliga  a reportar al fabricante dos parámetros relacionados con los falsos positivos y falsos negativos que genera su algoritmo: La predictividad positiva (+P) y la Sensibilidad (Se), respectivamente. Cuando, como es nuestro caso, el algoritmo solo detecta QRS, no hace una posterior calificación, las ecuaciones que la norma propone para determinar ambos parámetros son las de la figura \ref{code:norm}. Como se puede ver, en este caso particular, los QRS detectados correctamente por el algoritmo (QTP) son todos los detectados aunque no hayan sido calificados correctamente. QFN Y QFP, son, respectivamente, el numero de latidos que sí estaban a notados pero el algoritmo no ha detectado (falsos negativos) y los que sí ha detectado, pero no estaban anotados (falsos positivos).
+    También, e íntimamente relacionado con la tabla, la norma obliga  a reportar al fabricante dos parámetros relacionados con los falsos positivos y falsos negativos que genera su algoritmo: La predictividad positiva (+P) y la Sensibilidad (Se) respectivamente. Cuando el algoritmo solo detecta QRS las ecuaciones que la norma propone para determinar ambos parámetros son las de el extracto \ref{code:norm}. Como se puede ver, en este caso particular, los QRS detectados correctamente por el algoritmo (QTP) son todos los detectados aunque no hayan sido calificados correctamente. QFN Y QFP, son, respectivamente, el numero de latidos que sí estaban anotados pero el algoritmo no ha detectado (falsos negativos) y los que sí ha detectado, pero no estaban anotados (falsos positivos).
      
     Por último, la norma establece una tolerancia temporal en la comparación del tiempo anotado para el QRS en la base de datos y el tiempo calculado por el algoritmo. 
         
-    Por desgracia la nomenclatura de la MIT-BIH no coincide, por lo que, con el objetivo de \textit{extraer las anotaciones de la base de datos}, es necesario hacer algunas conversiones previas. Para ello se han integrado directamente en el script de Matlab implementado durante la primera iteración. Facilitando al usuario final un método de adquirir los datos de la MIT-BIH listos para ser usados. El script resultante puede ser comprobado en el extracto \ref{code:matlabAnn}, y con esto puede darse por finalizada la primera tarea de esta iteración.
+    Por desgracia la nomenclatura de la MIT-BIH no coincide, por lo que, con el objetivo de \textit{extraer las anotaciones de la base de datos}, es necesario hacer algunas conversiones previas. Para ello se han integrado directamente en el \textit{script} de Matlab implementado durante la primera iteración. Facilitando al usuario final un método de adquirir los datos de la MIT-BIH listos para ser usados. El \textit{script} resultante puede ser comprobado en el extracto \ref{code:matlabAnn}, y con esto puede darse por finalizada la primera tarea de esta iteración.
         
-	\code{Script de Matlab para consultar la base de datos.}{code/GetSampleAsTextWithAnnotations.m}{code:matlabAnn}{Octave}
+	\code{\textit{Script} de Matlab para consultar la base de datos.}{code/GetSampleAsTextWithAnnotations.m}{code:matlabAnn}{Octave}
         
-    Para la tercera tarea, \textit{habilitar el envío de anotaciones desde la plataforma de pruebas}, tarea simplemente se ha añadido un nuevo campo al mensaje de tipo ``uint8\char`_t'', que posteriormente será convertido en el panel a ``char''. De momento el algoritmo simple implementado como demostración solo es capaz de notificar latidos con el tipo N, sin embargo el sistema está preparado para que el usuario configure que anotaciones mandar con sus detecciones.
+    Para la tercera tarea, \textit{habilitar el envío de anotaciones desde la plataforma de pruebas}, tarea simplemente se ha añadido un nuevo campo al mensaje de tipo \textit{uint8\char`_t}, que posteriormente será convertido en el panel a \textit{char}. De momento el algoritmo simple implementado como demostración solo es capaz de notificar latidos con el tipo N, sin embargo el sistema está preparado para que el usuario configure que anotaciones mandar con sus detecciones.
     
     Acompañando a la anterior tarea, se ha \textit{modificado el algoritmo de detección implementado en la segunda iteración}, añadiendo una anotación a cada pico detectado. De esta forma queda preparado para poder ser evaluado mediante la norma. El algoritmo queda representado en el extracto \ref{code:BasicAlgAnn}, como puede observarse apenas hay diferencias con el algoritmo anterior (Extracto \ref{code:BasicAlg}), esto es debido a la simpleza del mismo, ya que solo está detectando latidos normales y por lo tanto todos los latidos detectados son de tipo ``N''.
     
     \code{Algoritmo de detección de picos R sencillo con anotaciones}{code/BasicAlgorithmAnn.c}{code:BasicAlgAnn}{C++}
         
-    Para la quinta, \textit{el almacenamiento de las anotaciones}, se ha decidido implementar una clase que contenga todas las funciones necesarias para manejar los datos de las anotaciones. De esta clase se necesita la capacidad de almacenar las anotaciones tanto de la base de datos como de los resultados del algoritmo, la capacidad de calcular las combinaciones de anotaciones en ambas listas y de encontrar aquellas anotaciones que solo están representadas en una de las listas, encontrando con ellas los falsos positivos y negativos. Para facilitar todos estos procedimientos en lugar de listas se han utilizado diccionarios, referidos en QT como QMaps. Empleando el número de la muestra como clave y asignando la anotación al valor. A continuación se describen los diferentes métodos que posee la clase.
+    Para la quinta, \textit{el almacenamiento de las anotaciones}, se ha decidido implementar una clase que contenga todas las funciones necesarias para manejar los datos de las anotaciones. De esta clase se necesita la capacidad de almacenar las anotaciones tanto de la base de datos como de los resultados del algoritmo, la capacidad de calcular las combinaciones de anotaciones en ambas listas y de encontrar aquellas anotaciones que solo están representadas en una de las listas, encontrando con ellas los falsos positivos y negativos. Para facilitar todos estos procedimientos en lugar de listas se han utilizado diccionarios, referidos en Qt como \textit{QMaps}. Empleando el número de la muestra como clave y asignando la anotación al valor. A continuación se describen los diferentes métodos que posee la clase.
         
     A la hora de determinar la fiabilidad es importante determinar la tolerancia de nuestro sistema. Este parámetro será configurable por el usuario desde el panel y vendrá especificado en número de muestras, por lo que dependiendo de la frecuencia de muestreo este corresponderá a un tiempo mayor o menor.
 
@@ -78,7 +77,7 @@
     \code{Función para calcular falsos positivos.}{code/FP.cpp}{code:FP}{C++}
   
     \clearpage
-    Una vez concluida la gestión interna de los datos resta por implementar la forma de\textit{ mostrar estos al usuario}. Para ello se ha empleado una tabla similar a la indicada por la norma.\cite{Aenor2002} Además se ha incluido un ``checkbox'' a cada fila para activar o desactivar dicha anotación en el calculo de la fidelidad. Como cabe esperar al disponer de 5 tipos de anotaciones la cantidad de combinaciones posibles, al tener en cuenta el orden, es de 25. Como trabajar con 25 salidas de texto diferentes de manera independiente es muy engorroso y difícil de trabajar, estas salidas se han incluido dentro de una matriz y se accede a ellas iterando las celdas de dicha matriz y haciendo un casting al elemento que contiene, observar en el extracto \ref{code:Cast}. 
+    Una vez concluida la gestión interna de los datos resta por implementar la forma de\textit{ mostrar estos al usuario}. Para ello se ha empleado una tabla similar a la indicada por la norma.\cite{Aenor2002} Además se ha incluido un ``checkbox'' a cada fila para activar o desactivar dicha anotación en el calculo de la fidelidad. Como cabe esperar al disponer de 5 tipos de anotaciones la cantidad de combinaciones posibles, al tener en cuenta el orden, es de 25. Como trabajar con 25 salidas de texto diferentes de manera independiente es muy engorroso y difícil de trabajar, estas salidas se han incluido dentro de una matriz y se accede a ellas iterando las celdas de dicha matriz y haciendo un \textit{casting} al elemento que contiene, observar en el extracto \ref{code:Cast}. 
         
     \code{Código para hacer el casting a elementos de un layout.}{code/casting.cpp}{code:Cast}{C++}
         

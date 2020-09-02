@@ -11,7 +11,7 @@
 \section{Primera iteración: El núcleo}
     \subsection{Resumen}
 
-        Esta primera iteración está centrada en la codificación de la estructura básica de la aplicación, creando durante ella la infraestructura que servirá de apoyo para todas las funcionalidades que se implementen en las sucesivas iteraciones, llamado comúnmente como ``Core application''. 
+        Esta primera iteración está centrada en la codificación de la estructura básica de la aplicación, creando durante ella la infraestructura que servirá de apoyo para todas las funcionalidades que se implementen en las sucesivas iteraciones, llamado comúnmente como \textit{Core application}. 
 
         Para dar esta iteración por finalizada, la aplicación del panel deberá ser capaz de enviar las muestras de ECG hacia la plataforma de muestreo y está a su vez ser capaz de recibirlas y enviarlas de vuelta al panel, verificando así la comunicación en el doble sentido.
 
@@ -34,9 +34,9 @@
 
     \subsection{Desarrollo}
 
-        Para realizar la primera de las tareas, \textit{la lectura de un fichero de datos con muestras de ECG}, se debe recordar que, como ya se mencionó en el capítulo de Introducción, existen diversas bases de datos fisiológicos, concretamente en este proyecto se usa la MIT-BIH Arrythmia Database \cite{MIT-BIH}, que contiene  muestras de ECG anotadas por especialistas en cardiología y cuyo uso está ampliamente extendido. 
+        Para realizar la primera de las tareas, \textit{la lectura de un fichero de datos con muestras de ECG}, se debe recordar que, como ya se mencionó en el capítulo de Introducción, existen diversas bases de datos fisiológicos, concretamente en este proyecto se usa la \textit{MIT-BIH Arrythmia Database} \cite{MIT-BIH}, que contiene  muestras de ECG anotadas por especialistas en cardiología y cuyo uso está ampliamente extendido. 
         
-        En la figura \ref{fig:106} se puede ver un segmento del registro 106 de la MIT-BIH Arrhythmia Database\cite{MIT-BIH}, tal como lo muestra uno de los visores que suministra Physionet\cite{phisionet}. Como se puede comprobar en la figura, cada registro contiene tanto los datos del ECG, recogidos de la derivación II y digitalizados a 360 Hz, como las anotaciones de los especialistas, en este caso \textbf{·} para los latidos normales y \textbf{V} para los ventriculares.
+        En la figura \ref{fig:106} se puede ver un segmento del registro 106 de la \textit{MIT-BIH Arrhythmia Database}\cite{MIT-BIH}, tal como lo muestra uno de los visores que suministra \textit{Physionet}\cite{phisionet}. Como se puede comprobar en la figura, cada registro contiene tanto los datos del ECG, recogidos de la derivación II y digitalizados a 360 Hz, como las anotaciones de los especialistas, en este caso \textbf{·} para los latidos normales y \textbf{V} para los ventriculares.
         
         \begin{figure}[H]  
                 \centering
@@ -45,11 +45,11 @@
                 \label{fig:106}
         \end{figure}
         
-        Es posible acceder a estos datos a través del repositorio de Physionet \cite{phisionet}, y, haciendo uso de su propia API, descargar los datos directamente desde matlab. De este modo, con un simple script (extracto \ref{code:sampleAsText}), es posible convertir cualquier muestra de datos procedente de dicho repositorio en un fichero de texto estandarizado para la entrada de datos del entorno de pruebas. De momento se va a extraer solamente los datos de la señal ECG, pero posteriormente será necesario extraer las anotaciones para evaluar la fidelidad.
+        Es posible acceder a estos datos a través del repositorio de \textit{Physionet} \cite{phisionet}, y, haciendo uso de su propia API, descargar los datos directamente desde Matlab. De este modo, con un simple \textit{script} (extracto \ref{code:sampleAsText}), es posible convertir cualquier muestra de datos procedente de dicho repositorio en un fichero de texto estandarizado para la entrada de datos del entorno de pruebas. De momento se va a extraer solamente los datos de la señal ECG, pero posteriormente será necesario extraer las anotaciones para evaluar la fidelidad.
         
          \code{Función de Matlab para extraer los datos del repositorio y formatearlos como texto.}{code/MatlabFirst.m}{code:sampleAsText}{Octave}
 
-        El siguiente paso consiste en \textit{leer dichos ficheros de texto desde el panel de usuario} y preparar los datos para enviarlos al dispositivo de pruebas. Este proceso tiene dos puntos claves, la lectura debe ser periódica y su frecuencia debe ser igual que la frecuencia de muestreo usada para almacenar las muestras en la base de datos. Para lograr este cometido se ha desarrollado un script siguiendo la estructura del diagrama \ref{fig:SimpleFileRead}. 
+        El siguiente paso consiste en \textit{leer dichos ficheros de texto desde el panel de usuario} y preparar los datos para enviarlos al dispositivo de pruebas. Este proceso tiene dos puntos claves, la lectura debe ser periódica y su frecuencia debe ser igual que la frecuencia de muestreo usada para almacenar las muestras en la base de datos. Para lograr este cometido se ha desarrollado un \textit{script} siguiendo la estructura del diagrama \ref{fig:SimpleFileRead}. 
 
         \begin{figure}[H]  
                 \centering
@@ -58,7 +58,7 @@
                 \label{fig:SimpleFileRead}
         \end{figure}
 
-        Para sincronizar las partes del script y garantizar la compatibilidad con futuras funcionalidades del panel de control se hace uso de los SLOT y las SIGNAL de Qt. Estos elementos son el pilar fundamental de las aplicaciones desarrolladas con Qt ya que actúan como canales de mensajes, permitiendo la sincronización de todas las funciones de la aplicación sin caer en fuertes restricciones por acoplamiento de las diferentes funcionalidades. El concepto es sencillo, cuando sucede un evento se emite una SIGNAL concreta para dicho evento, que además puede incluir datos como parámetros, y cualquier número de SLOTS que estén configurados para recibir dicha SIGNAL se ejecutan. 
+        Para sincronizar las partes del \textit{script} y garantizar la compatibilidad con futuras funcionalidades del panel de control se hace uso de los \textit{SLOT} y las \textit{SIGNAL} de Qt. Estos elementos son el pilar fundamental de las aplicaciones desarrolladas con Qt ya que actúan como canales de mensajes, permitiendo la sincronización de todas las funciones de la aplicación sin caer en fuertes restricciones por acoplamiento de las diferentes funcionalidades. El concepto es sencillo, cuando sucede un evento se emite una \textit{SIGNAL} concreta para dicho evento, que además puede incluir datos como parámetros, y cualquier número de \textit{SLOTS} que estén configurados para recibir dicha \textit{SIGNAL} se ejecutan. 
 
         Respecto al \textit{interfaz de usuario}, como se puede ver en el diagrama \ref{fig:CompleteFileRead}, se han añadido también diferentes entradas para que el usuario interaccione. Estas son una rueda selectora para configurar la frecuencia de forma manual, un botón para realizar la lectura de la frecuencia de muestreo directamente desde el fichero y un tercero que daría comienzo a la prueba. En la figura \ref{fig:frecKnob} se puede ver la disposición de estos elementos en el panel.
 
@@ -69,7 +69,7 @@
                 \label{fig:CompleteFileRead}
         \end{figure}
 
-        Antes de continuar con la \textit{implementación del envío de los datos}, es necesario detenerse en la gestión del tiempo real y el sincronismo dentro del dispositivo de pruebas, concretamente la Tiva (TM4C123GXL). Para esta finalidad se ha hecho uso de un sistema operativo de tiempo real de software libre llamado FREERTOS \cite{FreeRTOS}. Gracias a él se pueden gestionar y sincronizar tareas asignándoles diferentes prioridades, solucionando el problema de tener que gestionar las comunicaciones a la vez que se realizan las pruebas de rendimiento, ganando en el proceso además total independencia entre las tareas reduciendo acoplamientos.
+        Antes de continuar con la \textit{implementación del envío de los datos}, es necesario detenerse en la gestión del tiempo real y el sincronismo dentro del dispositivo de pruebas, concretamente la Tiva (TM4C123GXL). Para esta finalidad se ha hecho uso de un sistema operativo de tiempo real de software libre llamado FreeRTOS \cite{FreeRTOS}. Gracias a él se pueden gestionar y sincronizar tareas asignándoles diferentes prioridades, solucionando el problema de tener que gestionar las comunicaciones a la vez que se realizan las pruebas de rendimiento, ganando en el proceso además total independencia entre las tareas reduciendo acoplamientos.
         
         \begin{figure}[H]
                 \centering
@@ -78,13 +78,13 @@
                 \label{fig:frecKnob}
         \end{figure}
 
-        Para la comunicación entre el dispositivo de pruebas y el panel de usuario se hace uso de un puerto serie. Para garantizar la correcta transmisión de los datos se emplean dos mecanismos ampliamente extendidos por su eficacia y relativa sencillez, checksum y byte stuffing. 
+        Para la comunicación entre el dispositivo de pruebas y el panel de usuario se hace uso de un puerto serie. Para garantizar la correcta transmisión de los datos se emplean dos mecanismos ampliamente extendidos por su eficacia y relativa sencillez, CRC y \textit{byte stuffing}. 
         
-        El checksum es el mecanismo encargado de comprobar que no hayan habido errores en la comunicación, para ello se calcula un número en función de los bytes de la trama y se adjunta a esta, de forma que al recibir los datos, puede repetirse la operación y comprobar ambos valores. 
+        El CRC, o \textit{Cyclic redundancy check},  es un mecanismo encargado de comprobar que no hayan habido errores en la comunicación. Para ello se calcula un número en función de los bytes de la trama y se adjunta a esta, de forma que al recibir los datos, puede repetirse la operación y comprobar ambos valores. A diferencia de en un \textit{checksum} convencional, que solo es capaz de detectar cuando cambia un valor, el CRC añade la capacidad de comprobar si han sucedido intercambios de posición entre los datos debido a las operaciones realizadas.
         
-        El byte stuffing por otro lado define un mecanismo por el cual se protegen los caracteres especiales de la trama. Por motivos azarosos es posible que alguno de los bytes enviados coincida con un byte reservado correspondiente a algún carácter especial  como podría ser el de fin de trama. El byte stuffing empleado en este proyecto consiste en la incorporación de un carácter especial de salto justo delante de cada carácter reservado que se localice. De esta forma, en recepción se puede tratar un carácter especial como un byte normal si frente a el se encuentra el carácter de salto. No existe ningún problema si la cadena original contiene un byte idéntico al carácter de salto, pues esto resultaría en la incorporación de un carácter de salto frente al original, tratando a este como un byte normal en recepción.
+        El \textit{byte stuffing} por otro lado define un mecanismo por el cual se protegen los caracteres especiales de la trama. Por motivos azarosos es posible que alguno de los bytes enviados coincida con un byte reservado correspondiente a algún carácter especial  como podría ser el de fin de trama. El \textit{byte stuffing} empleado en este proyecto consiste en la incorporación de un carácter especial de salto justo delante de cada carácter reservado que se localice. De esta forma, en recepción se puede tratar un carácter especial como un byte normal si frente a el se encuentra el carácter de salto. No existe ningún problema si la cadena original contiene un byte idéntico al carácter de salto, pues esto resultaría en la incorporación de un carácter de salto frente al original, tratando a este como un byte normal en recepción.
         
-        Para complementar lo explicado sobre el protocolo de comunicación, este se ha representado en el diagrama \ref{fig:frame}. Cada salto de línea representa cada nueva etapa del protocolo de envío. El ejemplo expuesto contiene un byte de datos que coincide con el byte de final de trama, representado como “END”, a fin de ejemplificar el funcionamiento del método de stuffing.
+        Para complementar lo explicado sobre el protocolo de comunicación, este se ha representado en el diagrama \ref{fig:frame}. Cada salto de línea representa cada nueva etapa del protocolo de envío. El ejemplo expuesto contiene un byte de datos que coincide con el byte de final de trama, representado como \textit{END}, a fin de ejemplificar el funcionamiento del método de \textit{stuffing}.
 
         \begin{figure}[H]
                 \centering
@@ -106,9 +106,9 @@
                 \item Lectura incorrecta de una línea de datos
         \end{itemize}
 
-        Para el protocolo el proceso ha sido similar, si es capaces de codificar y decodificar un mensaje, donde entre en juego la necesidad de emplear el bit Stuffing, entonces debe ser capaz de codificar y decodificar cualquier mensaje.
+        Para el protocolo el proceso ha sido similar, si es capaces de codificar y decodificar un mensaje, donde entre en juego la necesidad de emplear el \textit{bit Stuffing}, entonces debe ser capaz de codificar y decodificar cualquier mensaje.
 
-        Para comprobar la transmisión de los datos entre el panel y el dispositivo de prueba se ha optado por un test de carácter más empírico. Si se puede enviar en tiempo real y recibir de vuelta la señal deseada sin que los datos se distorsionen, se puede concluir que el sistema de transmisión funciona correctamente. Esto se ha comprobado empleando el inspector de variables en modo debug de ambos entornos, observando que los valores eran equivalentes.
+        Para comprobar la transmisión de los datos entre el panel y el dispositivo de prueba se ha optado por un test de carácter más empírico. Si se puede enviar en tiempo real y recibir de vuelta la señal deseada sin que los datos se distorsionen, se puede concluir que el sistema de transmisión funciona correctamente. Esto se ha comprobado empleando el inspector de variables en modo \textit{debug} de ambos entornos, observando que los valores eran equivalentes.
 
     \subsection{Conclusiones}
 

@@ -22,17 +22,17 @@ El concepto test unitario hace referencia a una serie de pruebas realizadas sobr
 
 Implementando las pruebas de esta forma se consigue facilitar la tarea de mantener el código durante el desarrollo, evitando tener que realizar pruebas nuevas cada vez que se modifica un componente y asegurando que si los tests siguen pasando, el componente está funcionando.
 
-Además ofrece otros beneficios como la modularidad del código, agiliza el desarrollo a largo plazo, el código se vuelve más sencillo de debugear y evita que los bugs se propaguen a fases más avanzadas del desarrollo.
+Además ofrece otros beneficios como la modularidad del código, agiliza el desarrollo a largo plazo, el código se vuelve más sencillo de \textit{debugear} y evita que los \textit{bugs} se propaguen a fases más avanzadas del desarrollo.
 
-\section{Implementación en QT}
+\section{Implementación en Qt}
 
 El framework de QT posee las herramientas necesarias para realizar pruebas unitarias de forma nativa. Sin embargo es necesario realizar ciertos pasos previos para preparar el proyecto y tener en cuenta ciertas consideraciones.
 
-\subsection{Configurar el proyecto de QT}
+\subsection{Configurar el proyecto de Qt}
 
-Primeramente es necesario crear un proyecto de QT multicarpeta, ya que los tests se implementan en un proyecto separado de la aplicación principal, este proyecto será llamado de ahora en adelante como el proyecto raíz.
+Primeramente es necesario crear un proyecto de Qt multicarpeta, ya que los tests se implementan en un proyecto separado de la aplicación principal, este proyecto será llamado de ahora en adelante como el proyecto raíz.
 
-Para esto es necesario crear un directorio y generar a mano el ``projectName.pro'' del proyecto fijando el valor del campo ``TEMPLATE'' a subdirs. Dado que los proyectos de QT son carpetas, hay que añadir los subdirectorios al fichero quedando de forma similar al extracto \ref{code:simplePRO}.
+Para esto es necesario crear un directorio y generar a mano el \textit{projectName.pro} del proyecto fijando el valor del campo \textit{TEMPLATE} a subdirs. Dado que los proyectos de Qt son carpetas, hay que añadir los subdirectorios al fichero quedando de forma similar al extracto \ref{code:simplePRO}.
 
 \code{Ejemplo de fichero ``.pro'' de un proyecto multicarpeta.}{code/basic.pro}{code:simplePRO}{C}
 
@@ -40,20 +40,20 @@ En caso de poseer ya un proyecto previo, se puede introducir dentro del proyecto
 
 \subsection{Crear los proyectos de test}
 
-El proceso para generar los proyectos de test es simple gracias a las herramientas que ofrece QT creator.
+El proceso para generar los proyectos de test es simple gracias a las herramientas que ofrece Qi Creator.
 
-Abriendo el proyecto raíz con la aplicación QT creator, hay que generar un subproyecto. Para ello la forma más directa es hacer click derecho sobre el proyecto raíz y seleccionar en el menú la opción ``New subproject''. En la ventana emergente se selecciona ``Other Project/Auto Test Project''.
+Abriendo el proyecto raíz con la aplicación Qt Creator, hay que generar un subproyecto. Para ello la forma más directa es hacer \textit{click} derecho sobre el proyecto raíz y seleccionar en el menú la opción \textit{New subproject}. En la ventana emergente se selecciona \textit{Other Project/Auto Test Project}.
 
 Ahora solo es necesario seguir los pasos indicados rellenando los campos necesarios. los campos que no se mencionan a continuación no es necesario modificarlos.
 
 \begin{itemize}
-    \item \textbf{Name:} Nombre del proyecto, generalmente es buena práctica empezar por ``tst''.
-    \item \textbf{Test case name:} El nombre del caso a testear, generalmente el componente, la recomendación es emplear un subproyecto por cada componente.
-    \item Marcar la casilla \textbf{Generate initialization and cleanup code}.
-    \item Seleccionar los kits necesarios, generalmente los mismos que use el proyecto principal.
+    \item \textit{Name}: Nombre del proyecto, generalmente es buena práctica empezar por ``tst''.
+    \item \textit{Test case name}: El nombre del caso a testear, generalmente el componente, la recomendación es emplear un subproyecto por cada componente.
+    \item Marcar la casilla \textit{Generate initialization and cleanup code}.
+    \item Seleccionar los \textit{kits} necesarios, generalmente los mismos que use el proyecto principal.
 \end{itemize}
 
-Este proceso habrá generado un nuevo proyecto (Y su carpeta) y habrá introducido el subdirectorio directamente en el ``.pro'' del proyecto raíz. Para evitar que los proyectos de test se incluyan en el proceso de compilación del modo release se puede añadir el comando ``CONFIG(debug, debug|release)'', quedando finalmente el fichero de forma similar al extracto \ref{code:PRO}.
+Este proceso habrá generado un nuevo proyecto (Y su carpeta) y habrá introducido el subdirectorio directamente en el ``.pro'' del proyecto raíz. Para evitar que los proyectos de test se incluyan en el proceso de compilación del modo \textit{release} se puede añadir el comando \textit{CONFIG(debug, debug|release)}, quedando finalmente el fichero de forma similar al extracto \ref{code:PRO}.
 
 \code{Ejemplo de fichero ``.pro'' con subproyectos de test.}{code/basicWithTests.pro}{code:PRO}{C}
 
@@ -62,22 +62,25 @@ Este proceso habrá generado un nuevo proyecto (Y su carpeta) y habrá introduci
 Concluido el paso anterior el proyecto ya dispone de un subproyecto para test, ahora bien, es necesario importar los componentes necesarios para llevar cada prueba en los proyectos de test. Al estar en un proyecto distinto a la aplicación principal no se puede emplear directamente un ``include'', es necesario proveer de los ficheros fuente al proyecto de test. A priori se podría pensar en duplicarlos pero eso solo dificultaría el mantenimiento del código.  
 La solución correcta es emplear un archivo ``.pri'' que no es más que un archivo para indicarle a QMake (El compilador) elementos externos que debe incluir en la compilación. Este fichero debe ir colocado en la carpeta raíz del proyecto e incluir todas las dependencias que se necesiten.
 
-Una buena práctica es crear un fichero ``coomons.pri'' e incluir todas las dependencias comunes del proyecto. Aunque también se pueden crear diferentes ficheros de inclusión específicos para cada subproyecto o incluso distribuir los ficheros de inclusión por funcionalidades. En cualquier caso, como se puede observar en el extracto \ref{code:PRI}, es mejor y más seguro emplear direcciones relativas para las dependencias.
+Una buena práctica es crear un fichero \textit{commons.pri} e incluir todas las dependencias comunes del proyecto. Aunque también se pueden crear diferentes ficheros de inclusión específicos para cada subproyecto o incluso distribuir los ficheros de inclusión por funcionalidades. En cualquier caso, como se puede observar en el extracto \ref{code:PRI}, es mejor y más seguro emplear direcciones relativas para las dependencias.
 
 \code{Ejemplo de fichero ``.pri'' para la inclusión de dependencias.}{code/commons.pri}{code:PRI}{C}
 
-Una vez generado el fichero de inclusión se debe señalizar en el ``.pro'' del subproyecto deseado que se quieren importar los elementos. Para ello al comienzo del fichero se añade el siguiente comando: ``include(../common.pri)''.
+Una vez generado el fichero de inclusión se debe señalizar en el ``.pro'' del subproyecto deseado que se quieren importar los elementos. Para ello al comienzo del fichero se añade el siguiente comando: \textit{include(../common.pri)}.
 
-Otro elemento a tener en cuenta son las propias dependencias de QT, que se encuentran en el ``.pro'' del proyecto de tests. Es posible que en algún momento se necesite añadir dependencias de QT como los ``widgets'' o la ``gui''.
+Otro elemento a tener en cuenta son las propias dependencias de Qt, que se encuentran en el ``.pro'' del proyecto de tests. Es posible que en algún momento se necesite añadir dependencias de Qt como los \textit{widgets} o  \textit{gui}.
 
 \subsection{Escribir y ejecutar los tests}
 
-Dentro del framework de testeo, una vez los proyectos ya están configurados, crear un nuevo caso de test es tan simple como declarar un slot privado dentro de la clase. Cuando se ejecuten los tests se ejecutarán automáticamente estos slots.
+Dentro del \textit{framework} de testeo, una vez los proyectos ya están configurados, crear un nuevo caso de test es tan simple como declarar un \textit{SLOT} privado dentro de la clase de test. Cuando se ejecuten los tests  se ejecutarán automáticamente estos \textit{SLOTS}. En el extracto \ref{code:SampleTest} se presenta un ejemplo de un fichero fuente de un proyecto de test orientativo.
 
-Para ejecutar los tests, solo hay que ir al apartado de test en la barra inferior del QT Creator y darle al botón de ejecutar.
+\code{Ejemplo de fichero de test unitario completo.}{code/SampleTest.c}{code:SampleTest}{C}
 
+Para ejecutar los tests, solo hay que ir al apartado de test en la barra inferior del Qt Creator, seleccionar la pestaña \textit{Test Results} y pulsar el botón de ejecutar en el menú contextual.
+
+\clearpage
 \section{Conclusiones}
 
-Sobre tests unitarios hay mucho escrito y en concreto sobre tests QT también. Este anexo no pretende ser una guía completa sobre esta materia ni siquiera una introducción a la misma, tan solo una recopilación de los pasos y criterios seguidos durante el desarrollo de este proyecto. Para ampliar información sobre esta materia y aprender verdaderamente a escribir tests unitarios en QT, la documentación oficial es un buen lugar para empezar. Concretamente \href{https://doc.qt.io/qt-5/qtest-overview.html}{QT Test Overview} \cite{QTTestOverview} para ver las posibilidades de la herramienta y \href{https://doc.qt.io/qt-5/qtest-tutorial.html}{QT Test Tutorial} \cite{QTTesTutorial} para comenzar.
+Sobre tests unitarios hay mucho escrito y también acerca de tests unitarios en Qt concretamente. Este anexo no pretende ser una guía completa sobre esta materia ni siquiera una introducción a la misma, tan solo una recopilación de los pasos y criterios seguidos durante el desarrollo de este proyecto. Para ampliar información sobre esta materia y aprender verdaderamente a escribir tests unitarios en QT, la documentación oficial es un buen lugar para empezar. Concretamente \href{https://doc.qt.io/qt-5/qtest-overview.html}{\textit{Qt Test Overview}} \cite{QTTestOverview} para ver las posibilidades de la herramienta y \href{https://doc.qt.io/qt-5/qtest-tutorial.html}{\textit{Qt Test Tutoria}l} \cite{QTTesTutorial} para comenzar.
 
 \chapterend

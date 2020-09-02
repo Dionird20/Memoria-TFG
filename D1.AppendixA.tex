@@ -17,18 +17,19 @@
 \minitoc
 
 \section{General}
-Welcome to the QRS detection algorithm benchmark platform for integrated and low power devices. This platform is created to make the performance and reliability checks much easier, providing an already implemented environment for testing the user´s own algorithm without worrying too much about communications and the measure methods.
+
+Welcome to the QRS detection algorithm benchmark platform for integrated and low power devices. This platform is created to make the performance and reliability checks much easier, providing an already implemented environment for testing the user's own algorithm without worrying too much about communications and the measure methods.
 
 This document will guide the user one step at a time in order to accomplish a successful measurement of the algorithm, starting directly with the task of introducing the algorithm into the device.
 
 \section{Introducing the algorithm}
 For this task we recommend the usage of Code composer studio, but any IDE capable of compiling and assembling for a Tiva C series (TM4C123GXL) can be used.
 
-There is a lot of stuff inside the project that is not interesting from a user´s perspective, which is why the only explanation provided will be of the main files that are needed to introduce the algorithm, grouped in a single folder called “userEntry” and described in the following lines:
+There is a lot of stuff inside the project that is not interesting from a user's perspective, which is why the only explanation provided will be of the main files that are needed to introduce the algorithm, grouped in a single folder called “userEntry” and described in the following lines:
 
 \begin{itemize}
-    \item \textbf{userAlgorithm.h}: This is the header file, where the helper functions needed to implement the algorithm will be declared. Each one of them have to be placed under the “User Functions” section. Any function declaration under other sections should not be erased.
-    \item \textbf{userAlgorithm.c}: This is the main file where the algorithm will be implemented. One can create any number of helper functions for implementing it, but the main one, which will have the logic of the user´s algorithm, needs to be QrsDetectionAlgorithm. This function is the one that will be called by the system. Also there is a function called EcgProcessingConfig that will be called once at the beginning of the benchmark and is perfect for placing all the initializations that the algorithm needs. 
+    \item \textbf{userAlgorithm.h}: This is the header file, where the helper functions needed to implement the algorithm will be declared. Each one of them have to be placed under the ``User Function'' section. Any function declaration under other sections should not be erased.
+    \item \textbf{userAlgorithm.c}: This is the main file where the algorithm will be implemented. One can create any number of helper functions for implementing it, but the main one, which will have the logic of the user's algorithm, needs to be QrsDetectionAlgorithm. This function is the one that will be called by the system. Also there is a function called EcgProcessingConfig that will be called once at the beginning of the benchmark and is perfect for placing all the initializations that the algorithm needs. 
 \end{itemize}
 
 All of this can be a little tricky at the beginning but there is a simple example already implemented just for providing a little more help.
